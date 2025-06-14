@@ -10,6 +10,7 @@ import './Navbar.css';
 import Nav from 'react-bootstrap/Nav';
 import BootstrapNavbar from 'react-bootstrap/Navbar';
 import CustomModal from "../Modal/CustomModal";
+import { CartProvider } from "../CarritoCompra/CarritoCompra.jsx";
 
 function Navbar() {
     const [modalType, setModalType] = useState(null);
@@ -17,7 +18,7 @@ function Navbar() {
     const handleClose = () => setModalType(null);
 
     return (
-        <>
+        <CartProvider>
             <div className="navar-fixed">
                 <nav className="login_register">
                     <div>
@@ -87,7 +88,7 @@ function Navbar() {
                 />
             </div>
             <div className="navbar-realative"></div>
-        </>
+        </CartProvider>
     );
 }
 
