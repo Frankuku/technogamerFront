@@ -1,0 +1,13 @@
+.cart {
+    display: none;
+    background-color: red;
+    position: fixed;
+    right: 0;
+    top: 160px;
+    width: 400px;
+}
+
+.cart-button~input:checked~.cart {
+    height: 100%;
+    display: block;
+}
