@@ -39,8 +39,7 @@ function Item({ producto }) {
               }}
             >
               <img src={carrito} alt="carrito" />
-              {isProductInCart && <span>✓</span>}
-              {console.log(producto)}
+
             </Button>
           </div>
         </div>
