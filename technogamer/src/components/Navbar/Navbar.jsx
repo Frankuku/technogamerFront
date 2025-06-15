@@ -18,7 +18,7 @@ function Navbar() {
     const handleClose = () => setModalType(null);
 
     return (
-        <CartProvider>
+        <>
             <div className="navar-fixed">
                 <nav className="login_register">
                     <div>
@@ -88,7 +88,7 @@ function Navbar() {
                 />
             </div>
             <div className="navbar-realative"></div>
-        </CartProvider>
+        </>
     );
 }
 

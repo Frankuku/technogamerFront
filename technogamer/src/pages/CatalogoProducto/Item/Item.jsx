@@ -32,9 +32,10 @@ function Item({ producto }) {
             <Button
               className="btn-carrito"
               onClick={(e) => {
-                e.preventDefault();        // evita que el <Link> se dispare
-                e.stopPropagation();       // evita burbujas que causan navegación
+                e.preventDefault();
+                e.stopPropagation();
                 addToCart(producto);
+                console.log("AGREGADO:", producto);
               }}
             >
               <img src={carrito} alt="carrito" />
