@@ -1,14 +1,16 @@
 import { useId } from "react";
 import './Cart.css';
-import { useCart } from "../../hook/useCart";
+import { useCart } from "../../hook/useCart.js"
 import carrito from "../../assets/img/iconos/carrito.png";
+import Button from "../button/Button.jsx";
+import { Link } from "react-router-dom";
 
 function CartItem({ id, image, name, price, quantity, onAdd, onRemove }) {
     return (
         <li>
             <img src={image} alt={name} />
             <h3>{name}</h3>
-            <div>${price}</div>
+            <div>${price * quantity}</div>
             <small>Cantidad: {quantity}</small>
             <div className="botones">
                 <button onClick={onAdd}>+</button>
@@ -20,7 +22,12 @@ function CartItem({ id, image, name, price, quantity, onAdd, onRemove }) {
 
 export function Cart() {
     const cartCheckboxId = useId();
-    const { cart, clearCart, addToCart, removeFromCart } = useCart(); // ✅ incluir removeFromCart
+    const { cart, clearCart, addToCart, removeFromCart } = useCart();
+
+    const total = cart.reduce(
+        (acc, product) => acc + product.price * (product.quantity || 1),
+        0
+    );
 
     return (
         <>
@@ -31,7 +38,7 @@ export function Cart() {
 
             <aside className="cart">
                 <ul className="m-0 carrito-select">
-                    {cart.length === 0 && <li >Vacío</li>}
+                    {cart.length === 0 && <li>Vacío</li>}
 
                     {cart.map(product => (
                         <CartItem
@@ -42,14 +49,20 @@ export function Cart() {
                             price={product.price}
                             quantity={product.quantity || 1}
                             onAdd={() => addToCart(product)}
-                            onRemove={() => removeFromCart(product)} // ✅ pasar función individual
+                            onRemove={() => removeFromCart(product)}
                         />
                     ))}
                 </ul>
 
-                {/* Si querés dejar un botón para vaciar todo el carrito también */}
                 {cart.length > 0 && (
-                    <button className="vaciar_carrito" onClick={clearCart}>🗑 Vaciar todo el carrito</button>
+                    <>
+                        <div className="total-precio">
+                            <strong>Total: ${total}</strong>
+                        </div>
+                        <Link to="/compra">
+                            <Button texto="Seguir con la compra" />
+                        </Link>
+                    </>
                 )}
             </aside>
         </>

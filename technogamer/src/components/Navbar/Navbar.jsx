@@ -5,13 +5,11 @@ import lupa from "../../assets/img/iconos/buscador.png";
 import Buscador from "../Buscardor/Buscardor";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
-import Cart from "../../pages/Cart/Cart.jsx"
+import Cart from "../Cart/Cart.jsx"
 import './Navbar.css';
 import Nav from 'react-bootstrap/Nav';
 import BootstrapNavbar from 'react-bootstrap/Navbar';
 import CustomModal from "../Modal/CustomModal";
-import { CartProvider } from "../CarritoCompra/CarritoCompra.jsx";
-
 function Navbar() {
     const [modalType, setModalType] = useState(null);
 
