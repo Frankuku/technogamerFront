@@ -57,11 +57,25 @@
     width: 215px;
 }
 
-.acciones button {
+button {
     border: none;
     background-color: transparent;
     color: #008CFF;
     font-size: 1.3rem;
+}
+
+.total {
+    font-family: "Saira", sans-serif;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 2.3rem;
+}
+
+.total>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media (min-width: 1024px) {

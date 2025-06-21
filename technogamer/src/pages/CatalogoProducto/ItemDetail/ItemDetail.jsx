@@ -21,7 +21,6 @@ function ItemDetail({ item }) {
           <p>Precio de la lista ${(item.price * 2).toFixed(2)}</p>
         </div>
 
-        {/* ✅ Agrega al carrito al presionar */}
         <Button texto="Comprar ahora" onClick={() => addToCart(item)} />
 
         <p className='garantia_y_stock'>Garantia 12 meses</p>

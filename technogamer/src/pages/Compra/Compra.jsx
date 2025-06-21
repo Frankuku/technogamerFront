@@ -1,5 +1,6 @@
 import { useCart } from "../../hook/useCart.js";
 import Carrito from "../../assets/img/iconos/carrito.png"
+import Button from "../../components/button/Button.jsx"
 import "./Compra.css"
 function Compra() {
     const { cart, clearCart, addToCart, removeFromCart } = useCart();
@@ -19,10 +20,9 @@ function Compra() {
                         <p className="no_item">Aún no hay items en el carrito!</p>
                     </div>
 
-                    <ul className="productos_compra">
-                        <p><strong>Total: ${total}</strong></p>
-                        <button onClick={clearCart}>Confirmar y vaciar carrito</button>
-                    </ul>
+                    <div className="productos_compra total">
+                        <p>Resumen de pedido <br /> Total: ${total}</p>
+                    </div>
                 </div>
             ) : (
                 <div className="resumen">
@@ -42,10 +42,14 @@ function Compra() {
                             </li>
                         ))}
                     </ul>
-                    <ul className="productos_compra">
-                        <p><strong>Total: ${total}</strong></p>
-                        <button onClick={clearCart}>Confirmar y vaciar carrito</button>
-                    </ul>
+                    <div className="productos_compra total">
+                        <p>Resumen de pedido <br /> Total: ${total}</p>
+                        <div>
+                            <Button texto="Continuar"></Button>
+                            <Button texto="🗑" onClick={clearCart}> </Button>
+                        </div>
+
+                    </div>
                 </div>
             )}
         </div>
