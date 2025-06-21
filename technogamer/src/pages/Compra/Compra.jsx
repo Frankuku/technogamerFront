@@ -1,14 +1,24 @@
 import { useCart } from "../../hook/useCart.js";
 import Carrito from "../../assets/img/iconos/carrito.png"
 import Button from "../../components/button/Button.jsx"
+import { useNavigate } from "react-router-dom";
 import "./Compra.css"
-function Compra() {
+function Compra({ setModalType }) {
     const { cart, clearCart, addToCart, removeFromCart } = useCart();
+    const navigate = useNavigate();
 
-    const total = cart.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-    );
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    const handleClick = () => {
+        const isLogged = localStorage.getItem("logged");
+        console.log("Continuar clickeado");
+        if (isLogged === "true") {
+            navigate("/Error");
+        } else {
+            setModalType("login");
+            console.log("modalType seteado a login");
+        }
+    };
 
     return (
         <div className="compra-container">
@@ -45,7 +55,7 @@ function Compra() {
                     <div className="productos_compra total">
                         <p>Resumen de pedido <br /> Total: ${total}</p>
                         <div>
-                            <Button texto="Continuar"></Button>
+                            <Button texto="Continuar" onClick={handleClick} />
                             <Button texto="🗑" onClick={clearCart}> </Button>
                         </div>
 

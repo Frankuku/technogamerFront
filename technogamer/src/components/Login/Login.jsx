@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from '../button/Button'; // Asegúrate que Button.jsx exista
+import Button from '../button/Button';
 import './Login.css';
 
 function Login({ abrirModalRegister }) {
@@ -17,10 +17,10 @@ function Login({ abrirModalRegister }) {
       navigate('/');
     } else {
       alert("Datos incorrectos");
-    }
-    navigate('/Error');
-  };
+      navigate('/Error');
 
+    }
+  };
   return (
     <div className="login-container">
       <h2 className="login-title">INICIAR SESIÓN</h2>

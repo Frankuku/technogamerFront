@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Navbar from './components/Navbar/Navbar.jsx'
 import Home from './pages/Home/Home.jsx'
 import Footer from './components/Footer/Footer.jsx'
@@ -11,17 +13,19 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 
 function App() {
+  const [modalType, setModalType] = useState(null);
   return (
     <CartProvider>
       <BrowserRouter>
-        <Navbar />
+
+        <Navbar modalType={modalType} setModalType={setModalType} />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path="/productos" element={<ItemListContainer />} />
           <Route path="/producto/:id" element={<ItemDetailConteiner />} />
           <Route path="/productos/:category" element={<ItemListContainer />} />
           <Route path="/productos/:category/:subcategory" element={<ItemListContainer />} />
-          <Route path='/compra' element={<Compra />} />
+          <Route path='/compra' element={<Compra setModalType={setModalType} />} />
           <Route path="/Error" element={<Error />} />
           <Route path="/about" element={<About />} />
         </Routes>

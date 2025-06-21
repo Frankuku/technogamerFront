@@ -10,8 +10,8 @@ import './Navbar.css';
 import Nav from 'react-bootstrap/Nav';
 import BootstrapNavbar from 'react-bootstrap/Navbar';
 import CustomModal from "../Modal/CustomModal";
-function Navbar() {
-    const [modalType, setModalType] = useState(null);
+function Navbar({ modalType, setModalType }) {
+
 
     const handleClose = () => setModalType(null);
 
