@@ -22,7 +22,7 @@ function CartItem({ id, image, name, price, quantity, onAdd, onRemove }) {
 
 export function Cart() {
     const cartCheckboxId = useId();
-    const { cart, clearCart, addToCart, removeFromCart } = useCart();
+    const { cart, addToCart, removeFromCart } = useCart();
 
     const total = cart.reduce(
         (acc, product) => acc + product.price * (product.quantity || 1),
