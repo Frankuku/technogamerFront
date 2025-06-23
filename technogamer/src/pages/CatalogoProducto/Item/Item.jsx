@@ -6,10 +6,11 @@ import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png'
 function Item({ producto }) {
   const { addToCart, cart } = useCart()
+  console.log(cart);
   const checkProductInCart = product => {
     return cart.some(item => item.id === product.id)
   }
-  const isProductInCart = checkProductInCart(producto); // ✅ uso correcto
+
   return (
 
     <Link to={`/producto/${producto.id}`} className="col-sm-12 col-md-5 col-lg-3 p-2">
