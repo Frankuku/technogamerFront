@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 
 import isotipo from "../../assets/img/isotipo_technogamer.svg";
 import lupa from "../../assets/img/iconos/buscador.png";
@@ -14,21 +14,34 @@ function Navbar({ modalType, setModalType }) {
 
 
     const handleClose = () => setModalType(null);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isLogged = localStorage.getItem("logged") === "true";
 
+    const handleLogout = () => {
+        localStorage.removeItem("logged");
+        window.location.reload();
+    };
     return (
         <>
             <div className="navar-fixed">
                 <nav className="login_register">
-                    <div>
-                        <button className=" iconos forlogin_forregister" onClick={() => setModalType('login')}>
-                            <p>Iniciar sesión</p>
-                        </button>
-                    </div>
-                    <div>
-                        <button className=" iconos forlogin_forregister" onClick={() => setModalType('register')}>
-                            <p>Registrarse</p>
-                        </button>
-                    </div>
+                    {isLogged ? (
+                        <>
+                            <p className=" iconos fs-5 d-block align-self-center">Hola, {user?.nombre || "Usuario"}!</p>
+                            <button className="iconos forlogin_forregister" onClick={handleLogout}>
+                                <p>Cerrar sesión</p>
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button className=" iconos forlogin_forregister" onClick={() => setModalType('login')}>
+                                <p>Iniciar sesión</p>
+                            </button>
+                            <button className=" iconos forlogin_forregister" onClick={() => setModalType('register')}>
+                                <p>Registrarse</p>
+                            </button>
+                        </>
+                    )}
                 </nav>
 
                 <BootstrapNavbar collapseOnSelect expand="lg" className="navabar">
@@ -75,7 +88,8 @@ function Navbar({ modalType, setModalType }) {
                 <CustomModal
                     visible={modalType === 'login'}
                     onHide={handleClose}
-                    contenido={<Login abrirModalRegister={() => setModalType('register')} />}
+                    contenido={<Login abrirModalRegister={() => setModalType('register')}
+                        onLoginSuccess={handleClose} />}
                     cruz={true}
                 />
                 <CustomModal

@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useRef } from "react";
 import './Cart.css';
 import { useCart } from "../../hook/useCart.js"
 import carrito from "../../assets/img/iconos/carrito.png";
@@ -14,6 +14,7 @@ function CartItem({ id, image, name, price, quantity, onAdd, onRemove }) {
             <small>Cantidad: {quantity}</small>
             <div className="botones">
                 <button onClick={onAdd}>+</button>
+                <button onClick={onAdd}>-</button>
                 <button onClick={onRemove}>🗑</button> {/* 👈 botón eliminar individual */}
             </div>
         </li>
@@ -22,6 +23,7 @@ function CartItem({ id, image, name, price, quantity, onAdd, onRemove }) {
 
 export function Cart() {
     const cartCheckboxId = useId();
+    const checkboxRef = useRef();
     const { cart, addToCart, removeFromCart } = useCart();
 
     const total = cart.reduce(
@@ -34,7 +36,7 @@ export function Cart() {
             <label className="cart-button iconos" htmlFor={cartCheckboxId}>
                 <img src={carrito} alt="carrito" />
             </label>
-            <input id={cartCheckboxId} type="checkbox" hidden />
+            <input id={cartCheckboxId} type="checkbox" hidden ref={checkboxRef} />
 
             <aside className="cart">
                 <ul className="m-0 carrito-select">
@@ -59,7 +61,7 @@ export function Cart() {
                         <div className="total-precio">
                             <strong>Total: ${total}</strong>
                         </div>
-                        <Link to="/compra">
+                        <Link to="/compra" onClick={() => checkboxRef.current.checked = false}>
                             <Button texto="Seguir con la compra" />
                         </Link>
                     </>

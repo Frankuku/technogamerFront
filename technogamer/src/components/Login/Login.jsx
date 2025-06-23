@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from '../button/Button';
 import './Login.css';
 
-function Login({ abrirModalRegister }) {
+function Login({ abrirModalRegister, onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function Login({ abrirModalRegister }) {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.email === email && user.pass === pass) {
       localStorage.setItem("logged", true);
-      navigate('/');
+      onLoginSuccess();
     } else {
       alert("Datos incorrectos");
       navigate('/Error');

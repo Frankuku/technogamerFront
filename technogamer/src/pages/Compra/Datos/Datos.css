@@ -1,0 +1,13 @@
+.datos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .datos {
+        grid-template-columns: 2fr 1fr;
+    }
+}

@@ -13,7 +13,7 @@ function Compra({ setModalType }) {
         const isLogged = localStorage.getItem("logged");
         console.log("Continuar clickeado");
         if (isLogged === "true") {
-            navigate("/Error");
+            navigate("/Datos");
         } else {
             setModalType("login");
             console.log("modalType seteado a login");
