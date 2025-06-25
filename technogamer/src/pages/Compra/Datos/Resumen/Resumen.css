@@ -1,0 +1,42 @@
+.resumen-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #008CFF;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Saira', sans-serif;
+    color: #F5F5F5;
+}
+
+.resumen-container h2 {
+    text-align: center;
+    color: #008CFF;
+    margin: 0;
+    font-size: 28px;
+}
+
+.resumen-container p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.resumen-container strong {
+    text-transform: uppercase;
+    color: #008CFF;
+}
+
+hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.resumen-container h3 {
+    text-transform: uppercase;
+    text-align: right;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #F5F5F5;
+}

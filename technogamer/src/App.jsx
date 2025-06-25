@@ -7,6 +7,7 @@ import ItemListContainer from './pages/CatalogoProducto/ItemListContainer/ItemLi
 import ItemDetailConteiner from './pages/CatalogoProducto/ItemDetailConteiner/ItemDetailConteiner.jsx'
 import Compra from "./pages/Compra/Compra.jsx";
 import Datos from "./pages/Compra/Datos/Datos.jsx";
+import Resumen from "./pages/Compra/Datos/Resumen/Resumen.jsx"
 import Error from './pages/Error/Error.jsx'
 import About from './pages/About/About.jsx'
 
@@ -29,7 +30,7 @@ function App() {
           <Route path="/productos/:category/:subcategory" element={<ItemListContainer />} />
           <Route path='/compra' element={<Compra setModalType={setModalType} />} />
           <Route path="/datos" element={<Datos />} />
-
+          <Route path="/resumen" element={<Resumen />} />
           <Route path="/Error" element={<Error />} />
           <Route path="/about" element={<About />} />
         </Routes>

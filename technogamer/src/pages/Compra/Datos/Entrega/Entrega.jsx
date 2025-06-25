@@ -23,6 +23,17 @@ const Entrega = forwardRef((props, ref) => {
 
             return Object.keys(nuevosErrores).length === 0;
         },
+        getDatos: () => {
+            let costo = 0;
+            if (tipoEnvio === "domicilio") costo = 20000;
+            else if (tipoEnvio === "sucursal") costo = 15000;
+            else if (tipoEnvio === "retiro") costo = 0;
+
+            return {
+                tipoEntrega: tipoEnvio || null,
+                costoEnvio: costo
+            };
+        }
     }));
 
     return (

@@ -3,14 +3,23 @@ import Pago from "./Pago/Pago.jsx";
 import "./Datos.css";
 import Button from "../../../components/button/Button";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Datos() {
     const pagoRef = useRef();
     const entregaRef = useRef();
+    const navigate = useNavigate();
 
     const handleConfirmar = () => {
-        const esPagoValido = pagoRef.current.validar();
-        const esEntregaValido = entregaRef.current.validar();
+        const pagoValido = pagoRef.current.validar();
+        const entregaValida = entregaRef.current.validar();
+
+        if (pagoValido && entregaValida) {
+            const datosPago = pagoRef.current.getDatos();
+            const datosEntrega = entregaRef.current.getDatos();
+
+            navigate("/resumen", { state: { ...datosPago, ...datosEntrega } });
+        }
     };
 
     return (

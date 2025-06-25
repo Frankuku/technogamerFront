@@ -32,6 +32,11 @@ const Pago = forwardRef((props, ref) => {
 
             setErrores(nuevosErrores);
             return Object.keys(nuevosErrores).length === 0;
+        },
+        getDatos: () => {
+            return {
+                tipoPago: metodo || null
+            };
         }
     }));
 
