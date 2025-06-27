@@ -10,10 +10,12 @@ import Datos from "./pages/Compra/Datos/Datos.jsx";
 import Resumen from "./pages/Compra/Datos/Resumen/Resumen.jsx"
 import Error from './pages/Error/Error.jsx'
 import About from './pages/About/About.jsx'
-
+import Admin from "./pages/Admin/Admin.jsx";
+import RutaProtegida from "./pages/Admin/RutaProtegida/RutaProtegida.jsx";
 import { CartProvider } from './components/CarritoCompra/CarritoCompra.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+
 
 function App() {
   const [modalType, setModalType] = useState(null);
@@ -33,6 +35,11 @@ function App() {
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/Error" element={<Error />} />
           <Route path="/about" element={<About />} />
+          <Route path="/Admin" element={
+            <RutaProtegida rolRequerido="admin">
+              <Admin />
+            </RutaProtegida>
+          } />
         </Routes>
         <Footer />
       </BrowserRouter>

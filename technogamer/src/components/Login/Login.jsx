@@ -11,14 +11,23 @@ function Login({ abrirModalRegister, onLoginSuccess }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
     const user = JSON.parse(localStorage.getItem("user"));
+
+    if (email === "admin@gmail.com" && pass === "1234") {
+      localStorage.setItem("logged", true);
+      localStorage.setItem("rol", "admin");
+      navigate("/Admin");
+      return;
+    }
+
     if (user && user.email === email && user.pass === pass) {
       localStorage.setItem("logged", true);
+      localStorage.setItem("rol", "user");
       onLoginSuccess();
     } else {
       alert("Datos incorrectos");
-      navigate('/Error');
-
+      navigate("/Error");
     }
   };
   return (
