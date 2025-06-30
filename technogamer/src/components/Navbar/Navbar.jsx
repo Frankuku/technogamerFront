@@ -14,7 +14,17 @@ function Navbar({ modalType, setModalType }) {
 
 
     const handleClose = () => setModalType(null);
-    const user = JSON.parse(localStorage.getItem("user"));
+    //const user = JSON.parse(localStorage.getItem("user"));
+    
+    const user = (() => {
+        try {
+            return JSON.parse(localStorage.getItem("user"));
+         } catch (e) {
+            return null;
+            }
+    })();
+
+
     const isLogged = localStorage.getItem("logged") === "true";
 
     const handleLogout = () => {
@@ -67,7 +77,7 @@ function Navbar({ modalType, setModalType }) {
                             <Nav.Link className="enlace" href="/productos">Productos</Nav.Link>
                             <Nav.Link className="enlace" href="/Error">Soporte</Nav.Link>
                             <Nav.Link className="enlace" href="/about">Nosotros</Nav.Link>
-                            <Nav.Link className="enlace" href="/Admin">Admin</Nav.Link>
+                            <Nav.Link className="enlace" href="/admin">Admin</Nav.Link>
                         </Nav>
                         <Nav className="align-items-center visible-pc">
                             <div className="iconos">

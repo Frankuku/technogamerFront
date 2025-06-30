@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Navbar from './components/Navbar/Navbar.jsx'
 import Home from './pages/Home/Home.jsx'
 import Footer from './components/Footer/Footer.jsx'
@@ -10,11 +9,15 @@ import Datos from "./pages/Compra/Datos/Datos.jsx";
 import Resumen from "./pages/Compra/Datos/Resumen/Resumen.jsx"
 import Error from './pages/Error/Error.jsx'
 import About from './pages/About/About.jsx'
-import Admin from "./pages/Admin/Admin.jsx";
+import AdminLayout from "./pages/Admin/AdminLayout.jsx"
+import AdminProductsPage from "./pages/Admin/Producto/AdminProductsPage.jsx";
+import StockControlPage from "./pages/Admin/Producto/StockControlPage.jsx"
 import RutaProtegida from "./pages/Admin/RutaProtegida/RutaProtegida.jsx";
+import AdminUsersPage from "./pages/Admin/Usuario/AdminUsersPage.jsx";
 import { CartProvider } from './components/CarritoCompra/CarritoCompra.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+
 
 
 function App() {
@@ -35,11 +38,39 @@ function App() {
           <Route path="/resumen" element={<Resumen />} />
           <Route path="/Error" element={<Error />} />
           <Route path="/about" element={<About />} />
+
+          //Aqui empiezan las rutas de la seccion de administracion
           <Route path="/Admin" element={
-            <RutaProtegida rolRequerido="admin">
-              <Admin />
-            </RutaProtegida>
+            //<RutaProtegida rolRequerido="admin">          
+              <AdminLayout />
+          //  </RutaProtegida>
           } />
+
+          <Route path="/admin/products"
+                element={
+                  <AdminLayout>
+                   <AdminProductsPage />
+                  </AdminLayout>
+                }
+         />
+
+          <Route path="/admin/stock"
+                element={
+                  <AdminLayout>
+                   <StockControlPage />
+                  </AdminLayout>
+                }
+         />
+
+         //Aqui comienza la ruta de usuarios
+          <Route path="/admin/users"
+                element={
+                  <AdminLayout>
+                   <AdminUsersPage />
+                  </AdminLayout>
+                }
+          />
+
         </Routes>
         <Footer />
       </BrowserRouter>
