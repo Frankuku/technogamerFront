@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from '../button/Button'; // Asegúrate que existe
+import Button from '../button/Button';
 import './Register.css';
 
 function Register({ abrirModalLogin }) {
