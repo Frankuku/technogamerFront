@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import ProductFormModal from "./ProductFormModal";
 import ToastMessage from "../../../components/ToastMessage";
+import API_URL from "../../../config/api";
 
 const AdminProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -37,7 +38,7 @@ const AdminProductsPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/categories");
+      const res = await axios.get(`${API_URL}/categories`);
       setCategories(res.data.categories || []);
     } catch (err) {
       console.error("Error al cargar categorías", err);
@@ -55,7 +56,7 @@ const AdminProductsPage = () => {
       if (search.trim()) params.search = search;
       if (category) params.category = category;
 
-      const res = await axios.get("http://localhost:4000/api/products", { params });
+      const res = await axios.get(`${API_URL}/products`, { params });
 
       setProducts(res.data.products);
       setPage(res.data.currentPage);
@@ -76,7 +77,7 @@ const AdminProductsPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de que deseas eliminar este producto?")) {
       try {
-        await axios.delete(`http://localhost:4000/api/products/${id}`);
+        await axios.delete(`${API_URL}/products/${id}`);
         showToast("Producto eliminado", "danger");
         fetchProducts(page);
       } catch (err) {
@@ -118,7 +119,6 @@ const AdminProductsPage = () => {
 
   useEffect(() => {
     fetchCategories();
-    //fetchProducts();
   }, []);
 
   return (

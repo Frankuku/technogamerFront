@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import API_URL from "../../../config/api";
 
 const ProductFormModal = ({ show, onHide, product, onSave }) => {
   const [form, setForm] = useState({
@@ -17,7 +18,7 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await axios.get("http://localhost:4000/api/categories");
+      const res = await axios.get(`${API_URL}/categories`);
       setCategories(res.data.categories);
     };
     fetchCategories();
@@ -49,8 +50,8 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
 
   const handleSubmit = async () => {
     const url = product
-      ? `http://localhost:4000/api/products/${product._id}`
-      : "http://localhost:4000/api/products";
+      ? `${API_URL}/products/${product._id}`
+      : `${API_URL}/products`;
     const method = product ? "put" : "post";
     await axios[method](url, form);
     onSave();
@@ -58,7 +59,7 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={handleChange} backdrop="static" keyboard={false}>
       <Modal.Header closeButton>
         <Modal.Title>{product ? "Editar Producto" : "Nuevo Producto"}</Modal.Title>
       </Modal.Header>
