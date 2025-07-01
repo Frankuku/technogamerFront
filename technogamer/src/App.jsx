@@ -42,33 +42,33 @@ function App() {
           //Aqui empiezan las rutas de la seccion de administracion
           <Route path="/Admin" element={
             //<RutaProtegida rolRequerido="admin">          
-              <AdminLayout />
-          //  </RutaProtegida>
+            <AdminLayout />
+            //  </RutaProtegida>
           } />
 
           <Route path="/admin/products"
-                element={
-                  <AdminLayout>
-                   <AdminProductsPage />
-                  </AdminLayout>
-                }
-         />
+            element={
+              <AdminLayout>
+                <AdminProductsPage />
+              </AdminLayout>
+            }
+          />
 
           <Route path="/admin/stock"
-                element={
-                  <AdminLayout>
-                   <StockControlPage />
-                  </AdminLayout>
-                }
-         />
+            element={
+              <AdminLayout>
+                <StockControlPage />
+              </AdminLayout>
+            }
+          />
 
          //Aqui comienza la ruta de usuarios
           <Route path="/admin/users"
-                element={
-                  <AdminLayout>
-                   <AdminUsersPage />
-                  </AdminLayout>
-                }
+            element={
+              <AdminLayout>
+                <AdminUsersPage />
+              </AdminLayout>
+            }
           />
 
         </Routes>
