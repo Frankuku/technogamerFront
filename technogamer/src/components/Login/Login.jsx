@@ -11,7 +11,16 @@ function Login({ abrirModalRegister, onLoginSuccess }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (email === "admin@gmail.com" && pass === "1234") {
+      // Guardar rol admin en localStorage
+      localStorage.setItem("logged", true);
+      localStorage.setItem("rol", "admin");
+      localStorage.setItem("user", JSON.stringify({ email, role: "admin" }));
 
+      // Redirigir a /Admin
+      navigate("/admin");
+      return; // Terminar aquí para no hacer la llamada al backend
+    }
     try {
       const res = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
