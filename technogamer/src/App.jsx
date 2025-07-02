@@ -18,7 +18,7 @@ function AppContent({ modalType, setModalType }) {
     return <AdminRoutes />;
   }
 
-  // Mostrar navbar, footer y rutas públicas
+  // Mostrar navbar, footer y rutas públicasassadas
   return (
     <>
       <Navbar modalType={modalType} setModalType={setModalType} />
