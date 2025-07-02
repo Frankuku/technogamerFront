@@ -9,27 +9,56 @@ function Login({ abrirModalRegister, onLoginSuccess }) {
   const [pass, setPass] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    const user = JSON.parse(localStorage.getItem("user"));
-
     if (email === "admin@gmail.com" && pass === "1234") {
+      // Guardar rol admin en localStorage
       localStorage.setItem("logged", true);
       localStorage.setItem("rol", "admin");
-      navigate("/Admin");
-      return;
-    }
+      localStorage.setItem("user", JSON.stringify({ email, role: "admin" }));
 
-    if (user && user.email === email && user.pass === pass) {
+      // Redirigir a /Admin
+      navigate("/admin");
+      return; // Terminar aquí para no hacer la llamada al backend
+    }
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password: pass })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        alert(data.message || "Datos incorrectos");
+        navigate("/Error");
+        return;
+      }
+
+      const { user, token } = data;
+
+      // Guardar token y rol en localStorage
+      localStorage.setItem("token", token);
       localStorage.setItem("logged", true);
-      localStorage.setItem("rol", "user");
-      onLoginSuccess();
-    } else {
-      alert("Datos incorrectos");
-      navigate("/Error");
+      localStorage.setItem("rol", user.role);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Redirección por rol
+      if (user.role === "admin") {
+        navigate("/Admin");
+      } else {
+        onLoginSuccess(); // función que podés usar para cerrar modal, recargar, etc.
+      }
+
+    } catch (error) {
+      console.error("Error al hacer login:", error);
+      alert("Error de conexión con el servidor");
     }
   };
+
   return (
     <div className="login-container">
       <h2 className="login-title">INICIAR SESIÓN</h2>

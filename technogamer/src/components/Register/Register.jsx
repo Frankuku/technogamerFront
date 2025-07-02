@@ -22,7 +22,7 @@ function Register({ abrirModalLogin }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     if (formData.pass !== formData.repitePass) {
@@ -31,17 +31,35 @@ function Register({ abrirModalLogin }) {
     }
 
     const user = {
+      username: `${formData.nombre} ${formData.apellido}`,
       email: formData.email,
-      nombre: formData.nombre,
-      apellido: formData.apellido,
-      telefono: `+${formData.codigoArea} ${formData.telefono}`,
-      pass: formData.pass,
+      password: formData.pass,
+      telefono: `+${formData.codigoArea} ${formData.telefono}`
     };
 
-    localStorage.setItem("user", JSON.stringify(user));
-    alert("Usuario registrado con éxito");
-    abrirModalLogin();
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Usuario registrado con éxito");
+        abrirModalLogin(); // abrís el modal de login como ya hacías
+      } else {
+        alert(data.message || "Error al registrar usuario");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error del servidor al registrar usuario");
+    }
   };
+
 
   return (
     <div className="register-container">

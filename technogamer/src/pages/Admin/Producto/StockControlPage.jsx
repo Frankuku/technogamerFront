@@ -40,7 +40,7 @@ const StockControlPage = () => {
       if (searchTerm.trim()) params.search = searchTerm;
       if (selectedCategory) params.category = selectedCategory;
 
-      const res = await axios.get("http://localhost:4000/api/products", { params });
+      const res = await axios.get("http://localhost:5000/api/products", { params });
       setProducts(res.data.products);
       setTotalPages(res.data.totalPages || 1);
       setLoading(false);
@@ -80,7 +80,7 @@ const StockControlPage = () => {
     }
 
     try {
-      await axios.patch(`http://localhost:4000/api/products/${productId}`, { stock: newStock });
+      await axios.patch(`http://localhost:5000/api/products/${productId}`, { stock: newStock });
       setEditingStock((prev) => {
         const updated = { ...prev };
         delete updated[productId];

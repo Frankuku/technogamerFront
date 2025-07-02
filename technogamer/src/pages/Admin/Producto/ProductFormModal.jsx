@@ -24,6 +24,19 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
     };
     fetchCategories();
   }, []);
+  useEffect(() => {
+    if (!product && categories.length > 0 && form.category === "") {
+      const categoriaGabinete = categories.find(
+        (cat) => cat.name.toLowerCase() === "gabinete"
+      );
+      if (categoriaGabinete) {
+        setForm((prevForm) => ({
+          ...prevForm,
+          category: categoriaGabinete._id,
+        }));
+      }
+    }
+  }, [categories, product, form.category]);
 
   useEffect(() => {
     if (product) {

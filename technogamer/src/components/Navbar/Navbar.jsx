@@ -15,13 +15,13 @@ function Navbar({ modalType, setModalType }) {
 
     const handleClose = () => setModalType(null);
     //const user = JSON.parse(localStorage.getItem("user"));
-    
+
     const user = (() => {
         try {
             return JSON.parse(localStorage.getItem("user"));
-         } catch (e) {
+        } catch (e) {
             return null;
-            }
+        }
     })();
 
 
@@ -38,7 +38,7 @@ function Navbar({ modalType, setModalType }) {
                     {isLogged ? (
                         <>
                             <p className="iconos fs-5 d-block align-self-center">
-                                Hola, {localStorage.getItem("rol") === "admin" ? "Admin" : user?.nombre || "Usuario"}!
+                                Hola, {localStorage.getItem("rol") === "admin" ? "Admin" : user.nombre || "Usuario"}!
                             </p>
                             <button className="iconos forlogin_forregister" onClick={handleLogout}>
                                 <p>Cerrar sesión</p>
@@ -77,7 +77,6 @@ function Navbar({ modalType, setModalType }) {
                             <Nav.Link className="enlace" href="/productos">Productos</Nav.Link>
                             <Nav.Link className="enlace" href="/Error">Soporte</Nav.Link>
                             <Nav.Link className="enlace" href="/about">Nosotros</Nav.Link>
-                            <Nav.Link className="enlace" href="/admin">Admin</Nav.Link>
                         </Nav>
                         <Nav className="align-items-center visible-pc">
                             <div className="iconos">
