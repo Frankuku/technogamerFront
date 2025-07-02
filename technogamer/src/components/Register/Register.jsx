@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from '../button/Button'; // Asegúrate que existe
 import './Register.css';
+import API_URL from '../../config/api';
 
 function Register({ abrirModalLogin }) {
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ function Register({ abrirModalLogin }) {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
