@@ -3,6 +3,7 @@ import { Table, Button, Form, Container, Spinner, Pagination, Row, Col } from "r
 import axios from "axios";
 import dayjs from "dayjs";
 import ToastMessage from "../../../components/ToastMessage";
+import API_URL from "../../../config/api";
 
 const StockControlPage = () => {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,7 @@ const StockControlPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/categories");
+      const res = await axios.get(`${API_URL}/categories`);
       setCategories(res.data.categories);
     } catch (error) {
       console.error("Error al obtener categorías:", error);
@@ -40,7 +41,7 @@ const StockControlPage = () => {
       if (searchTerm.trim()) params.search = searchTerm;
       if (selectedCategory) params.category = selectedCategory;
 
-      const res = await axios.get("http://localhost:5000/api/products", { params });
+      const res = await axios.get(`${API_URL}/products`, { params });
       setProducts(res.data.products);
       setTotalPages(res.data.totalPages || 1);
       setLoading(false);
@@ -80,7 +81,7 @@ const StockControlPage = () => {
     }
 
     try {
-      await axios.patch(`http://localhost:5000/api/products/${productId}`, { stock: newStock });
+      await axios.patch(`${API_URL}/products/${productId}`, { stock: newStock });
       setEditingStock((prev) => {
         const updated = { ...prev };
         delete updated[productId];

@@ -1,5 +1,4 @@
 import { useState } from "react";
-<<<<<<< HEAD
 import Navbar from './components/Navbar/Navbar.jsx'
 import Home from './pages/Home/Home.jsx'
 import Footer from './components/Footer/Footer.jsx'
@@ -20,13 +19,7 @@ import AdminUsersPage from "./pages/Admin/Usuario/AdminUsersPage.jsx";
 import { CartProvider } from './components/CarritoCompra/CarritoCompra.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-=======
-import Navbar from './components/Navbar/Navbar.jsx';
-import Footer from './components/Footer/Footer.jsx';
-import { CartProvider } from './components/CarritoCompra/CarritoCompra.jsx';
-import { BrowserRouter, useLocation } from 'react-router-dom';
->>>>>>> e2584d76638057298989f95e4e2ef162d27dc42c
-
+import { useLocation } from "react-router-dom";
 import PublicRoutes from './Routers/PublicRoutes.jsx';
 import AdminRoutes from './Routers/AdminRoutes.jsx';
 
@@ -57,7 +50,6 @@ function App() {
   return (
     <CartProvider>
       <BrowserRouter>
-<<<<<<< HEAD
 
         <Navbar modalType={modalType} setModalType={setModalType} />
         <Routes>
@@ -120,9 +112,7 @@ function App() {
           />
         </Routes>
         <Footer />
-=======
         <AppContent modalType={modalType} setModalType={setModalType} />
->>>>>>> e2584d76638057298989f95e4e2ef162d27dc42c
       </BrowserRouter>
     </CartProvider>
   );
