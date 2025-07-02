@@ -20,7 +20,7 @@ const AdminLayout = ({ children }) => {
                 <Card.Body>
                   <Card.Title>🛒 Productos</Card.Title>
                   <Card.Text>Gestión completa de productos: crear, editar y eliminar.</Card.Text>
-                  <Button variant="primary" onClick={() => navigate("/admin/products")}>
+                  <Button variant="secondary" onClick={() => navigate("/admin/products")}>
                     Ir a Productos
                   </Button>
                 </Card.Body>
@@ -30,8 +30,18 @@ const AdminLayout = ({ children }) => {
                 <Card.Body>
                   <Card.Title>📦 Control de Stock</Card.Title>
                   <Card.Text>Revisar y actualizar rápidamente el stock de productos.</Card.Text>
-                  <Button variant="success" onClick={() => navigate("/admin/stock")}>
+                  <Button variant="secondary" onClick={() => navigate("/admin/stock")}>
                     Ir a Stock
+                  </Button>
+                </Card.Body>
+              </Card>
+
+              <Card style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>📦📦 Control de Ordenes</Card.Title>
+                  <Card.Text>Administrar ordenes registradas en el sistema.</Card.Text>
+                  <Button variant="secondary" onClick={() => navigate("/admin/orders")}>
+                    Ir a Ordenes
                   </Button>
                 </Card.Body>
               </Card>

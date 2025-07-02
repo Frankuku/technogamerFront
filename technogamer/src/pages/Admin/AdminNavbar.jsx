@@ -15,6 +15,9 @@ const AdminNavbar = () => {
             <NavLink className="nav-link" to="/admin/stock">
               📦 Control de Stock
             </NavLink>
+            <NavLink className="nav-link" to="/admin/orders">
+              📦📦 Control de Ordenes
+            </NavLink>
             <NavLink className="nav-link" to="/admin/users">
               👥 Usuarios
             </NavLink>
