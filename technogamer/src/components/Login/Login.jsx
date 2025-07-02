@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import API_URL from '../../config/api.js'; // ajustá la ruta según la carpeta
 import Button from '../button/Button';
 import './Login.css';
 
@@ -22,7 +23,7 @@ function Login({ abrirModalRegister, onLoginSuccess }) {
       return; // Terminar aquí para no hacer la llamada al backend
     }
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
