@@ -12,70 +12,116 @@ import {
 import axios from "axios";
 import ToastMessage from "../../../components/ToastMessage";
 import API_URL from "../../../config/api";
+import { useLocation } from "react-router-dom";
 
 const AdminOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [toast, setToast] = useState({ show: false, message: '', bg: 'success' });
+  const [toast, setToast] = useState({ show: false, message: "", bg: "success" });
 
-  const [statusFilter, setStatusFilter] = useState(''); // '' = All
+  const [statusFilter, setStatusFilter] = useState("");
+  const [orderIdSearch, setOrderIdSearch] = useState("");
+  const [userSearch, setUserSearch] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
 
-  const showToast = (message, bg = 'success') => {
+  const showToast = (message, bg = "success") => {
     setToast({ show: true, message, bg });
   };
 
-  const fetchOrders = async (pageNumber = 1, status = statusFilter) => {
+  const fetchOrders = async (pageNumber = 1) => {
     try {
       setLoading(true);
       const params = { page: pageNumber, limit };
-      if (status) params.status = status;
+
+      if (statusFilter) params.status = statusFilter;
+      if (orderIdSearch) params.orderId = orderIdSearch;
+      if (userSearch) params.userSearch = userSearch;
+
       const { data } = await axios.get(`${API_URL}/orders`, { params });
+
       if (data.success) {
         setOrders(data.orders || []);
         setPage(data.currentPage || pageNumber);
         setTotalPages(data.totalPages || 1);
       } else {
-        showToast('Error cargando órdenes', 'danger');
+        showToast("Error cargando órdenes", "danger");
       }
     } catch (err) {
       console.error(err);
-      showToast('Error cargando órdenes', 'danger');
+      showToast("Error cargando órdenes", "danger");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    setPage(1);
     fetchOrders(1);
   }, [statusFilter]);
 
   useEffect(() => {
-    fetchOrders(page);
-  }, [page]);
+  if (location.state?.refresh) {
+    fetchOrders(1);
+    // Limpiar el estado
+    window.history.replaceState({}, document.title);
+  }
+}, [location.state]);
+
+
+  const handleSearch = () => {
+    setPage(1);
+    fetchOrders(1);
+  };
 
   const handlePageChange = (num) => {
-    if (num >= 1 && num <= totalPages) setPage(num);
+    if (num >= 1 && num <= totalPages) {
+      setPage(num);
+      fetchOrders(num);
+    }
   };
 
   return (
     <Container className="mt-4">
       <h2>Administrar Órdenes</h2>
-      <Row className="mb-3 align-items-center">
-        <Col xs="auto">
+
+      <Row className="mb-3 g-2">
+        <Col md={3}>
           <Form.Select
             size="sm"
             value={statusFilter}
-            onChange={e => setStatusFilter(e.target.value)}
+            onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="">-- Todas los estados --</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="">-- Todos los estados --</option>
+            <option value="pending">Pendiente</option>
+            <option value="sent">Enviado</option>
+            <option value="delivered">Entregado</option>
+            <option value="cancelled">Cancelado</option>
           </Form.Select>
+        </Col>
+
+        <Col md={3}>
+          <Form.Control
+            size="sm"
+            placeholder="Buscar por número de orden"
+            value={orderIdSearch}
+            onChange={(e) => setOrderIdSearch(e.target.value)}
+          />
+        </Col>
+
+        <Col md={3}>
+          <Form.Control
+            size="sm"
+            placeholder="Buscar por usuario (email o username)"
+            value={userSearch}
+            onChange={(e) => setUserSearch(e.target.value)}
+          />
+        </Col>
+
+        <Col md={2}>
+          <Button size="sm" onClick={handleSearch}>
+            Buscar
+          </Button>
         </Col>
       </Row>
 
@@ -98,10 +144,12 @@ const AdminOrdersPage = () => {
             <tbody>
               {orders.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center">No hay órdenes</td>
+                  <td colSpan={7} className="text-center">
+                    No hay órdenes
+                  </td>
                 </tr>
               ) : (
-                orders.map(order => (
+                orders.map((order) => (
                   <tr key={order._id}>
                     <td>{order._id.slice(-6)}</td>
                     <td>{order.user?.username || order.user?.email}</td>
@@ -114,7 +162,9 @@ const AdminOrdersPage = () => {
                         size="sm"
                         variant="info"
                         href={`/admin/orders/${order._id}`}
-                      >Ver</Button>
+                      >
+                        Ver
+                      </Button>
                     </td>
                   </tr>
                 ))
@@ -125,12 +175,14 @@ const AdminOrdersPage = () => {
           <Pagination className="justify-content-center">
             <Pagination.First onClick={() => handlePageChange(1)} disabled={page === 1} />
             <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 1} />
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
               <Pagination.Item
                 key={num}
                 active={num === page}
                 onClick={() => handlePageChange(num)}
-              >{num}</Pagination.Item>
+              >
+                {num}
+              </Pagination.Item>
             ))}
             <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page === totalPages} />
             <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={page === totalPages} />
@@ -149,3 +201,4 @@ const AdminOrdersPage = () => {
 };
 
 export default AdminOrdersPage;
+

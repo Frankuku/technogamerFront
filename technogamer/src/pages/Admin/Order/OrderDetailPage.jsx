@@ -60,9 +60,13 @@ const OrderDetailPage = () => {
 
   return (
     <Container className="mt-4">
-      <Button variant="secondary" onClick={() => navigate(-1)} className="mb-3">
+        <Button
+        variant="secondary"
+        onClick={() => navigate('/admin/orders', { state: { refresh: true } })}
+        className="mb-3"
+        >
         ← Volver
-      </Button>
+        </Button>
       <h3>Detalle de Orden #{order._id}</h3>
       <Row className="mb-3">
         <Col md={6}>
@@ -89,10 +93,10 @@ const OrderDetailPage = () => {
         <Col md={4}>
           <h5>Estado</h5>
           <Form.Select value={status} onChange={handleStatusChange} size="sm">
-            <option value="pending">Pending</option>
-            <option value="delivered">delivered</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="pending">Pendiente</option>
+            <option value="sent">Enviado</option>
+            <option value="delivered">Entregado</option>
+            <option value="cancelled">Cancelado</option>
           </Form.Select>
         </Col>
       </Row>
