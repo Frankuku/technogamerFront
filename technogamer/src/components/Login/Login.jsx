@@ -49,7 +49,7 @@ function Login({ abrirModalRegister, onLoginSuccess }) {
 
       // Redirección por rol
       if (user.role === "admin") {
-        navigate("/Admin");
+        navigate("/admin");
       } else {
         onLoginSuccess(); // función que podés usar para cerrar modal, recargar, etc.
       }

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import Navbar from './components/Navbar/Navbar.jsx'
-import Footer from './components/Footer/Footer.jsx'
-import { CartProvider } from './components/CarritoCompra/CarritoCompra.jsx'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
-import { useLocation } from "react-router-dom";
+import Navbar from './components/Navbar/Navbar.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import { CartProvider } from './components/CarritoCompra/CarritoCompra.jsx';
+import { BrowserRouter, useLocation } from 'react-router-dom';
+
 import PublicRoutes from './Routers/PublicRoutes.jsx';
 import AdminRoutes from './Routers/AdminRoutes.jsx';
 
@@ -19,7 +18,7 @@ function AppContent({ modalType, setModalType }) {
     return <AdminRoutes />;
   }
 
-  // Mostrar navbar, footer y rutas públicas
+  // Mostrar navbar, footer y rutas públicasassadas
   return (
     <>
       <Navbar modalType={modalType} setModalType={setModalType} />

@@ -1,4 +1,3 @@
-// src/pages/AdminOrderDetailPage.jsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Table, Spinner, Button, Form } from "react-bootstrap";

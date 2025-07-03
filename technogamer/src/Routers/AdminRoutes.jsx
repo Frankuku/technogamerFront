@@ -29,7 +29,7 @@ export default function AdminRoutes() {
 
             <Routes>
                //Aqui empiezan las rutas de la seccion de administracion
-                <Route path="/Admin" element={
+                <Route path="/admin" element={
                     //<RutaProtegida rolRequerido="admin">          
                     <AdminLayout />
                     //  </RutaProtegida>
