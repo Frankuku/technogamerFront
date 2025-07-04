@@ -1,15 +1,15 @@
-import Item from "../Item/Item"
+import Item from "../Item/Item";
 import { Row } from "react-bootstrap";
 
-function ItemList({ productos }) {
+function ItemList({ products }) {
     return (
-
-        <Row className="gap-1" >
+        <Row className="gap-1">
             {
-                productos.length > 0 &&
-                productos.map((producto) => {
+                products.length > 0 &&
+                products.map((product) => { // <-- ¡Cambio aquí! 'products' (plural) a 'product' (singular)
                     return (
-                        <Item key={producto.id} producto={producto} />
+                        // Asumiendo que tus objetos de producto del backend tienen una propiedad '_id' única.
+                        <Item key={product._id} producto={product} /> // <-- ¡Y cambio aquí! de 'products.id' a 'product._id'
                     )
                 })
             }

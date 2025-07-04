@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import axios from "axios";
-import API_URL from "../../../config/api";
+import API_URL from "../../../config/api.js";
 
 const ProductFormModal = ({ show, onHide, product, onSave }) => {
   const [form, setForm] = useState({

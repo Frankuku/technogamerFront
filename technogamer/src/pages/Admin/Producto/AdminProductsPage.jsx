@@ -78,7 +78,7 @@ const AdminProductsPage = () => {
     if (window.confirm("¿Estás seguro de que deseas eliminar este producto?")) {
       try {
         await axios.delete(`${API_URL}/products/${id}`);
-        showToast("Producto eliminado", "danger");
+        showToast("Producto eliminado", "success");
         fetchProducts(page);
       } catch (err) {
         console.error("Error al eliminar", err);

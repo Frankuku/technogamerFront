@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from '../button/Button'; // Asegúrate que existe
 import API_URL from '../../config/api.js'; // ajustá la ruta según la carpeta
 import './Register.css';
-import API_URL from '../../config/api';
 
 function Register({ abrirModalLogin }) {
   const [formData, setFormData] = useState({
@@ -69,15 +68,6 @@ function Register({ abrirModalLogin }) {
       <h2 className="register-title">REGISTRARSE</h2>
       <form className="register-form" onSubmit={handleRegister}>
         <input
-          type="email"
-          name="email"
-          placeholder="Dirección de correo electrónico*"
-          value={formData.email}
-          onChange={handleChange}
-          className="register-input"
-          required
-        />
-        <input
           type="text"
           name="nombre"
           placeholder="Nombre*"
@@ -95,28 +85,15 @@ function Register({ abrirModalLogin }) {
           className="register-input"
           required
         />
-
-        <label className="register-label">Teléfono de contacto</label>
-        <div className="phone-group">
-          <input
-            type="text"
-            name="codigoArea"
-            placeholder="Código de área*"
-            value={formData.codigoArea}
-            onChange={handleChange}
-            className="register-input small-input"
-            required
-          />
-          <input
-            type="text"
-            name="telefono"
-            placeholder="Número de teléfono*"
-            value={formData.telefono}
-            onChange={handleChange}
-            className="register-input small-input"
-            required
-          />
-        </div>
+        <input
+          type="email"
+          name="email"
+          placeholder="Dirección de correo electrónico*"
+          value={formData.email}
+          onChange={handleChange}
+          className="register-input"
+          required
+        />
 
         <input
           type="password"

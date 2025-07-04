@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import API_URL from '../../config/api.js'; // ajustá la ruta según la carpeta
 import Button from '../button/Button';
 import './Login.css';
-import API_URL from '../../config/api';
 
 function Login({ abrirModalRegister, onLoginSuccess }) {
   const [email, setEmail] = useState('');

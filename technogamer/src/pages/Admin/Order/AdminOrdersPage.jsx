@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import ToastMessage from "../../../components/ToastMessage";
 import API_URL from "../../../config/api";
-import { useLocation } from "react-router-dom";
+
 
 const AdminOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -61,12 +61,12 @@ const AdminOrdersPage = () => {
   }, [statusFilter]);
 
   useEffect(() => {
-  if (location.state?.refresh) {
-    fetchOrders(1);
-    // Limpiar el estado
-    window.history.replaceState({}, document.title);
-  }
-}, [location.state]);
+    if (location.state?.refresh) {
+      fetchOrders(1);
+      // Limpiar el estado
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
 
   const handleSearch = () => {
@@ -201,4 +201,3 @@ const AdminOrdersPage = () => {
 };
 
 export default AdminOrdersPage;
-

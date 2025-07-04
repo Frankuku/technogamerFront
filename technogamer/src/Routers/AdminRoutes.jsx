@@ -3,6 +3,8 @@ import AdminLayout from "../pages/Admin/AdminLayout.jsx";
 import AdminProductsPage from "../pages/Admin/Producto/AdminProductsPage.jsx";
 import StockControlPage from "../pages/Admin/Producto/StockControlPage.jsx";
 import AdminUsersPage from "../pages/Admin/Usuario/AdminUsersPage.jsx";
+import AdminOrdersPage from "../pages/Admin/Order/AdminOrdersPage.jsx";
+import OrderDetailPage from "../pages/Admin/Order/OrderDetailPage.jsx"
 import "./AdminRoutes.css"
 import RutaProtegida from "../pages/Admin/RutaProtegida/RutaProtegida.jsx"
 
@@ -54,6 +56,20 @@ export default function AdminRoutes() {
                     element={
                         <AdminLayout>
                             <AdminUsersPage />
+                        </AdminLayout>
+                    }
+                />
+                <Route path="/admin/orders"
+                    element={
+                        <AdminLayout>
+                            <AdminOrdersPage />
+                        </AdminLayout>
+                    }
+                />
+                <Route path="/admin/orders/:id"
+                    element={
+                        <AdminLayout>
+                            <OrderDetailPage />
                         </AdminLayout>
                     }
                 />

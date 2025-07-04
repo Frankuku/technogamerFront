@@ -22,7 +22,7 @@ const Pago = forwardRef((props, ref) => {
                 nuevosErrores.metodo = "Seleccioná un método de pago.";
             }
 
-            if (metodo === 'tarjeta') {
+            if (metodo === 'card') {
                 if (!campos.nombre.trim()) nuevosErrores.nombre = "El nombre es obligatorio.";
                 if (!/^\d{12}$/.test(campos.tarjeta)) nuevosErrores.tarjeta = "Debe tener 12 dígitos.";
                 if (!/^\d{1,10}$/.test(campos.dni)) nuevosErrores.dni = "DNI no es valido (al menos debe tener 10 digitos).";
@@ -53,25 +53,25 @@ const Pago = forwardRef((props, ref) => {
 
             <div className="botones-pago">
                 <Button
-                    className={metodo === 'transferencia' ? 'btn-seleccionado' : 'btn-opcion'}
-                    onClick={() => setMetodo('transferencia')}
+                    className={metodo === 'cash' ? 'btn-seleccionado' : 'btn-opcion'}
+                    onClick={() => setMetodo('cash')}
                     texto="Transferencia"
                 />
                 <Button
-                    className={metodo === 'tarjeta' ? 'btn-seleccionado' : 'btn-opcion'}
-                    onClick={() => setMetodo('tarjeta')}
+                    className={metodo === 'card' ? 'btn-seleccionado' : 'btn-opcion'}
+                    onClick={() => setMetodo('card')}
                     texto="Tarjeta Débito/Crédito"
                 />
             </div>
             {errores.metodo && <p className="error">{errores.metodo}</p>}
 
-            {metodo === 'transferencia' && (
+            {metodo === 'cash' && (
                 <div className="notificacion-transferencia">
                     <strong>¡Recordá!</strong> Mandar el comprobante por WhatsApp o correo electrónico.
                 </div>
             )}
 
-            {metodo === 'tarjeta' && (
+            {metodo === 'card' && (
                 <form className="formulario-tarjeta">
                     <input
                         type="text"
