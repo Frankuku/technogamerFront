@@ -1,5 +1,4 @@
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../../../../hook/useCart.js";
 import Button from "../../../../components/button/Button.jsx";
 import API_URL from "../../../../config/api.js";
@@ -17,7 +16,7 @@ function Resumen() {
     const tipoEntrega = state?.tipoEntrega;
     const costoEnvio = state?.costoEnvio || 0;
 
-    // ✅ Dirección real traída desde Entrega.jsx
+    // Dirección real traída desde Entrega.jsx o valores por defecto
     const direccion = state?.direccion || {
         street: "Calle Ejemplo",
         city: "Ciudad",
@@ -49,28 +48,30 @@ function Resumen() {
 
             const paymentInfo = tipoPago || "no-definido";
 
-            const response = await axios.post(`${API_URL}/orders`, {
-                const response = await axios.post(`${API_URL}/orders`, {
+            const response = await axios.post(
+                `${API_URL}/orders`,
+                {
                     items,
                     shippingAddress: direccion,
                     paymentInfo
-                }, {
+                },
+                {
                     headers: {
-                        Authorization: token
+                        Authorization: `Bearer ${token}`
                     }
-                });
+                }
+            );
 
-                const orderId = response.data.order._id;
+            const orderId = response.data.order._id;
 
-                const orderId = response.data.order._id;
-
-                clearCart();
-            navigate(`/miCompra/${orderId}`); // ✅ Redirige a la página con el ID
+            clearCart();
+            navigate(`/miCompra/${orderId}`); // Redirige a la página con el ID
         } catch (error) {
             console.error("Error al crear orden:", error.response?.data || error.message);
             alert("Error al confirmar la compra");
         }
     };
+
     return (
         <div className="resumen-container">
             <h2>Resumen de la compra</h2>
