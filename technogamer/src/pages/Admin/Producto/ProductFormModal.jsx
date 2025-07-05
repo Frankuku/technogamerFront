@@ -16,6 +16,7 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [saving, setSaving] = useState(false);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -76,8 +77,14 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
         : `${API_URL}/products`;
       const method = product ? "put" : "post";
       const { data } = await axios[method](url, {
-        ...form,
-      });
+        ...form },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+      
+      );
       const prodId = data.product?._id || data._id;
 
       // 2) Subir imagen si se seleccionó
@@ -87,7 +94,7 @@ const ProductFormModal = ({ show, onHide, product, onSave }) => {
         await axios.post(
           `${API_URL}/products/${prodId}/upload`,
           formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
+          { headers: { Authorization: `${token}`,"Content-Type": "multipart/form-data" } }
         );
       }
 

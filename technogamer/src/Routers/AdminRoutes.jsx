@@ -8,6 +8,8 @@ import RutaProtegida from "../pages/Admin/RutaProtegida/RutaProtegida.jsx"
 import AdminOrdersPage from "../pages/Admin/Order/AdminOrdersPage.jsx";
 import OrderDetailPage from "../pages/Admin/Order/OrderDetailPage.jsx";
 
+
+
 export default function AdminRoutes() {
     const navigate = useNavigate();
 
@@ -69,14 +71,14 @@ export default function AdminRoutes() {
                     }
                 />
 
-        //Aqui comienza la ruta de usuarios
                 <Route path="/admin/orders/:id"
                     element={
                         <AdminLayout>
                             <OrderDetailPage />
                         </AdminLayout>
                     }
-                />                                
+                />
+                                
             </Routes>
         </>
     );
