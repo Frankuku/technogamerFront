@@ -16,7 +16,7 @@ function Item({ producto }) {
 
       <div className="card " >
         <img
-          src={producto.image}
+          src={`http://localhost:4000${producto.image}`}
           className="card-img-top"
           alt={producto.image}
         />

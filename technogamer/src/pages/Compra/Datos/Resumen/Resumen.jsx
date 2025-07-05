@@ -57,7 +57,7 @@ function Resumen() {
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: token
                     }
                 }
             );

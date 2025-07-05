@@ -93,7 +93,4 @@ function MiCompra() {
         </Container>
     );
 }
-
-
-
 export default MiCompra;
