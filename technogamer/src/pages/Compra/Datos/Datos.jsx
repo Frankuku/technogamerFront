@@ -18,7 +18,15 @@ function Datos() {
             const datosPago = pagoRef.current.getDatos();
             const datosEntrega = entregaRef.current.getDatos();
 
-            navigate("/resumen", { state: { ...datosPago, ...datosEntrega } });
+            navigate("/Resumen", {
+                state: {
+                    tipoPago: datosPago.tipoPago,
+                    tipoEntrega: datosEntrega.tipoEntrega,
+                    costoEnvio: datosEntrega.costoEnvio,
+                    direccion: datosEntrega.direccion
+                }
+            });
+
         }
     };
 

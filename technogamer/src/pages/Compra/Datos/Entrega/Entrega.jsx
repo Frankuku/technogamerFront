@@ -4,6 +4,7 @@ import React, { useState, forwardRef, useImperativeHandle } from "react";
 const Entrega = forwardRef((props, ref) => {
     const [calle, setCalle] = useState("");
     const [numero, setNumero] = useState("");
+    const [ciudad, setCiudad] = useState("");
     const [codigoPostal, setCodigoPostal] = useState("");
     const [tipoEnvio, setTipoEnvio] = useState("");
 
@@ -15,6 +16,7 @@ const Entrega = forwardRef((props, ref) => {
 
             if (!calle.trim()) nuevosErrores.calle = "La calle es obligatoria.";
             if (!numero.trim()) nuevosErrores.numero = "El número es obligatorio.";
+            if (!ciudad.trim()) nuevosErrores.ciudad = "La ciudad es obligatoria.";
             if (!codigoPostal || codigoPostal.length !== 4)
                 nuevosErrores.codigoPostal = "Debe tener 4 dígitos.";
             if (!tipoEnvio) nuevosErrores.tipoEnvio = "Seleccioná un tipo de envío.";
@@ -31,7 +33,13 @@ const Entrega = forwardRef((props, ref) => {
 
             return {
                 tipoEntrega: tipoEnvio || null,
-                costoEnvio: costo
+                costoEnvio: costo,
+                direccion: {
+                    street: `${calle} ${numero}`,
+                    city: ciudad,
+                    postalCode: codigoPostal,
+                    country: "Argentina"
+                }
             };
         }
     }));
@@ -55,6 +63,14 @@ const Entrega = forwardRef((props, ref) => {
                     onChange={(e) => setNumero(e.target.value.replace(/\D/g, ""))}
                 />
                 {errores.numero && <p className="error">{errores.numero}</p>}
+
+                <input
+                    type="text"
+                    placeholder="Ciudad"
+                    value={ciudad}
+                    onChange={(e) => setCiudad(e.target.value)}
+                />
+                {errores.ciudad && <p className="error">{errores.ciudad}</p>}
 
                 <input
                     type="text"
@@ -103,7 +119,6 @@ const Entrega = forwardRef((props, ref) => {
                 </div>
                 {errores.tipoEnvio && <p className="error">{errores.tipoEnvio}</p>}
 
-                {/* Mensajes según el tipo de envío */}
                 {tipoEnvio === "domicilio" && (
                     <div className="envio-info">
                         <p className="precio-envio">$20.000</p>
