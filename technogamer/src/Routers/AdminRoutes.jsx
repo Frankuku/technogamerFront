@@ -7,9 +7,6 @@ import AdminOrdersPage from "../pages/Admin/Order/AdminOrdersPage.jsx";
 import OrderDetailPage from "../pages/Admin/Order/OrderDetailPage.jsx"
 import "./AdminRoutes.css"
 import RutaProtegida from "../pages/Admin/RutaProtegida/RutaProtegida.jsx"
-import AdminOrdersPage from "../pages/Admin/Order/AdminOrdersPage.jsx";
-import OrderDetailPage from "../pages/Admin/Order/OrderDetailPage.jsx";
-
 
 
 export default function AdminRoutes() {
