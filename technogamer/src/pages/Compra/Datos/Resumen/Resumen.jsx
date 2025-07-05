@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../../hook/useCart.js";
 import Button from "../../../../components/button/Button.jsx";
+import API_URL from "../../../../config/api.js";
 import axios from "axios";
 import "./Resumen.css";
 
@@ -48,13 +49,9 @@ function Resumen() {
 
             const paymentInfo = tipoPago || "no-definido";
 
-            console.log("Método de pago:", paymentInfo);
-            console.log("Dirección de envío:", direccion);
-            console.log("Items del pedido:", items);
-
-            const response = await axios.post("http://localhost:4000/api/orders", {
+            const response = await axios.post(`${API_URL}/orders`, {
                 items,
-                shippingAddress: direccion, // ✅ Dirección real
+                shippingAddress: direccion,
                 paymentInfo
             }, {
                 headers: {
@@ -62,15 +59,15 @@ function Resumen() {
                 }
             });
 
-            console.log("Orden creada:", response.data);
+            const orderId = response.data.order._id;
+
             clearCart();
-            navigate("/");
+            navigate(`/miCompra/${orderId}`); // ✅ Redirige a la página con el ID
         } catch (error) {
             console.error("Error al crear orden:", error.response?.data || error.message);
             alert("Error al confirmar la compra");
         }
     };
-
     return (
         <div className="resumen-container">
             <h2>Resumen de la compra</h2>

@@ -7,6 +7,8 @@ import Compra from "../pages/Compra/Compra.jsx";
 import Datos from "../pages/Compra/Datos/Datos.jsx";
 import Resumen from "../pages/Compra/Datos/Resumen/Resumen.jsx";
 import Error from '../pages/Error/Error.jsx';
+import MisCompras from "../pages/MisCompras/MisCompras.jsx";
+import MiCompra from "../pages/MisCompras/MiCompra/MiCompra.jsx";
 import About from '../pages/About/About.jsx';
 
 export default function PublicRoutes({ setModalType }) {
@@ -19,6 +21,8 @@ export default function PublicRoutes({ setModalType }) {
             <Route path='/compra' element={<Compra setModalType={setModalType} />} />
             <Route path="/datos" element={<Datos />} />
             <Route path="/resumen" element={<Resumen />} />
+            <Route path="/miCompra/:orderId" element={<MiCompra />} />
+            <Route path="/miscompras" element={<MisCompras />} />
             <Route path="/Error" element={<Error />} />
             <Route path="/about" element={<About />} />
         </Routes>
