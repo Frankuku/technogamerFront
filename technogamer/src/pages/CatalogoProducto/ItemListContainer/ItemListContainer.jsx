@@ -1,58 +1,73 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import pedirProductos from '../js/pedirProductos';
-import ItemList from '../ItemList/ItemList';
+import { useLocation, useParams } from 'react-router-dom';
+import axios from "axios";
 import Category from '../Categoryfilter/Category';
-import './ItemListContainer.css';
+import ItemList from '../ItemList/ItemList';
 import pronto from '../../../assets/img/iconos/pronto.png';
+import API_URL from '../../../config/api';
+import "./ItemListContainer.css";
 
 function ItemListContainer() {
   const location = useLocation();
+  const { category } = useParams();
   const searchParams = new URLSearchParams(location.search);
-  const textoBusqueda = searchParams.get('buscar')?.toLowerCase() || '';  // Obtiene el parámetro de búsqueda de la URL
-  const [productos, setProductos] = useState([]);
-  const { category, subcategory } = useParams(); // usa también la subcategoría si está definida
+  const textoBusqueda = searchParams.get('buscar')?.toLowerCase() || '';
+
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/categories`);
+      setCategories(res.data.categories); // 👈 acceder directamente al array
+    } catch (error) {
+      console.error("Error al cargar categorías:", error);
+    }
+  };
+
+  const fetchProducts = async (pageNumber = 1, search = "", categoryParam = "") => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const params = { page: pageNumber, limit: 50 };
+      if (search.trim()) params.search = search;
+      if (categoryParam) params.category = categoryParam;
+
+      const res = await axios.get(`${API_URL}/products`, {
+        params,
+        headers: { Authorization: token }
+      });
+
+      setProducts(res.data.products);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error al cargar productos", err);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    console.log('Texto de búsqueda:', textoBusqueda);  // Verifica el valor del texto de búsqueda
-    pedirProductos()
-      .then((res) => {
-        let filtered = res;
+    fetchCategories();
+  }, []);
 
-        // Filtrado por categoría
-        if (category) {
-          filtered = filtered.filter((prod) => prod.category === category);
-        }
-
-        // Filtrado por subcategoría
-        if (subcategory) {
-          filtered = filtered.filter((prod) => prod.subcategory === subcategory);
-        }
-
-        // Filtrado por nombre (si se encuentra texto en la búsqueda)
-        if (textoBusqueda) {
-          filtered = filtered.filter((prod) =>
-            prod.name.toLowerCase().includes(textoBusqueda)
-          );
-        }
-
-        setProductos(filtered);  // Actualiza el estado con los productos filtrados
-      })
-      .catch((error) => {
-        console.error('Error al pedir productos:', error);  // Muestra el error si hay problemas
-      });
-  }, [category, subcategory, textoBusqueda]);  // Vuelve a ejecutarse si cambia la categoría, subcategoría o el texto de búsqueda
+  useEffect(() => {
+    fetchProducts(1, textoBusqueda, category);
+  }, [category, textoBusqueda]);
 
   return (
     <div className='grid-layout'>
-      <div className='flex-container-category'>
-        {/* Le pasamos category y subcategory para que el componente Category pueda saber cuál está activo */}
-        <Category selectedCategory={category} selectedSubcategory={subcategory} />
+      <div className='flex-container'>
+        <Category
+          selectedCategory={category}
+          categories={categories}
+        />
       </div>
       <div className='flex-container'>
-        {productos.length > 0 ? (
-          <ItemList productos={productos} />
+        {loading ? (
+          <p>Cargando...</p>
+        ) : products.length > 0 ? (
+          <ItemList products={products} />
         ) : (
           <div className="muy-pronto">
             <h3>¡MUY PRONTO <br />TENDREMOS MÁS!</h3>

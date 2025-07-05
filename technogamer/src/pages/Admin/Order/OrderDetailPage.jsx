@@ -59,13 +59,13 @@ const OrderDetailPage = () => {
 
   return (
     <Container className="mt-4">
-        <Button
+      <Button
         variant="secondary"
         onClick={() => navigate('/admin/orders', { state: { refresh: true } })}
         className="mb-3"
-        >
+      >
         ← Volver
-        </Button>
+      </Button>
       <h3>Detalle de Orden #{order._id}</h3>
       <Row className="mb-3">
         <Col md={6}>
