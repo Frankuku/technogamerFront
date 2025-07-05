@@ -49,36 +49,23 @@ function Resumen() {
 
             const paymentInfo = tipoPago || "no-definido";
 
-<<<<<<< HEAD
             const response = await axios.post(`${API_URL}/orders`, {
-                items,
-                shippingAddress: direccion,
-=======
-            console.log("Método de pago:", paymentInfo);
-            console.log("Dirección de envío:", direccion);
-            console.log("Items del pedido:", items);
+                const response = await axios.post(`${API_URL}/orders`, {
+                    items,
+                    shippingAddress: direccion,
+                    paymentInfo
+                }, {
+                    headers: {
+                        Authorization: token
+                    }
+                });
 
-            const response = await axios.post("http://localhost:4000/api/orders", {
-                items,
-                shippingAddress: direccion, // ✅ Dirección real
->>>>>>> 7a0939d (se corrigio el - y la pagina de producto)
-                paymentInfo
-            }, {
-                headers: {
-                    Authorization: token
-                }
-            });
+                const orderId = response.data.order._id;
 
-<<<<<<< HEAD
-            const orderId = response.data.order._id;
+                const orderId = response.data.order._id;
 
-            clearCart();
+                clearCart();
             navigate(`/miCompra/${orderId}`); // ✅ Redirige a la página con el ID
-=======
-            console.log("Orden creada:", response.data);
-            clearCart();
-            navigate("/");
->>>>>>> 7a0939d (se corrigio el - y la pagina de producto)
         } catch (error) {
             console.error("Error al crear orden:", error.response?.data || error.message);
             alert("Error al confirmar la compra");
