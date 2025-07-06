@@ -48,7 +48,15 @@ function MisCompras() {
                         <tr key={order._id}>
                             <td>{order._id}</td>
                             <td>{new Date(order.createdAt).toLocaleString()}</td>
-                            <td>{order.status}</td>
+                            <td>
+                                {order.status === "delivered"
+                                    ? "Entregado"
+                                    : order.status === "sent"
+                                        ? "Enviado"
+                                        : order.status === "pending"
+                                            ? "Pendiente"
+                                            : order.status}
+                            </td>
                             <td>${order.totalPrice.toFixed(2)}</td>
                             <td>
                                 <Link to={`/micompra/${order._id}`}>

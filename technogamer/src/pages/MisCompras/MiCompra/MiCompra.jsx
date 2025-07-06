@@ -38,7 +38,16 @@ function MiCompra() {
         <Container className="mt-5">
             <h2 className="mb-3">¡Tu compra!</h2>
             <p><strong>Orden:</strong> #{order._id}</p>
-            <p><strong>Estado:</strong> {order.status}</p>
+            <p>
+                <strong>Estado:</strong>{" "}
+                {order.status === "delivered"
+                    ? "Entregado"
+                    : order.status === "sent"
+                        ? "Enviado"
+                        : order.status === "pending"
+                            ? "Pendiente"
+                            : order.status}
+            </p>
             <p><strong>Fecha:</strong> {new Date(order.createdAt).toLocaleString()}</p>
 
             <hr />

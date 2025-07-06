@@ -40,11 +40,11 @@ const AdminOrdersPage = () => {
       if (orderIdSearch) params.orderId = orderIdSearch;
       if (userSearch) params.userSearch = userSearch;
 
-      const { data } = await axios.get(`${API_URL}/orders`, 
+      const { data } = await axios.get(`${API_URL}/orders`,
         { params },
         {
           headers: {
-          Authorization: `${token}`,
+            Authorization: `${token}`,
           },
         }
       );
@@ -162,7 +162,13 @@ const AdminOrdersPage = () => {
                     <td>{order.user?.username || order.user?.email}</td>
                     <td>{order.totalItems}</td>
                     <td>${order.totalPrice.toFixed(2)}</td>
-                    <td>{order.status}</td>
+                    <td>{order.status === "delivered"
+                      ? "Entregado"
+                      : order.status === "sent"
+                        ? "Enviado"
+                        : order.status === "pending"
+                          ? "Pendiente"
+                          : order.status}</td>
                     <td>{new Date(order.createdAt).toLocaleString()}</td>
                     <td>
                       <Button
