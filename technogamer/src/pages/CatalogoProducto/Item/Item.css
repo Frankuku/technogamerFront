@@ -44,3 +44,12 @@
     background-color: #0D0D0D;
     border: 1px solid #008CFF;
 }
+
+.sin-stock {
+    font-family: 'Saira', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #008CFF;
+    padding: 0.3rem;
+    border: 1px solid #008CFF;
+}

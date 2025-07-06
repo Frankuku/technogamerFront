@@ -29,20 +29,25 @@ function Item({ producto }) {
             </h5>
           </div>
           <div className="d-flex justify-content-between gap-2 mt-3 w-100 align-items-end">
-            <p className="card-text ">${producto.price}</p>
-            <Button
-              className="btn-carrito"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                addToCart(producto);
-                console.log("AGREGADO:", producto);
-              }}
-            >
-              <img src={carrito} alt="carrito" />
+            <p className="card-text">${producto.price}</p>
 
-            </Button>
+            {producto.stock > 0 ? (
+              <Button
+                className="btn-carrito"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  addToCart(producto);
+                  console.log("AGREGADO:", producto);
+                }}
+              >
+                <img src={carrito} alt="carrito" />
+              </Button>
+            ) : (
+              <span className="sin-stock">Sin stock</span>
+            )}
           </div>
+
         </div>
       </div>
     </Link>

@@ -47,3 +47,12 @@
     color: #008CFF;
     font-size: clamp(24px, 5vw, 36px);
 }
+
+.sin-stock {
+    font-family: 'Saira', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #008CFF;
+    padding: 0.3rem;
+    border: 1px solid #008CFF;
+}

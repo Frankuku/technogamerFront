@@ -53,7 +53,11 @@ function ItemDetail() {
           <p>Precio de lista: ${(item.price * 2).toFixed(2)}</p>
         </div>
 
-        <Button texto="Comprar ahora" onClick={() => addToCart(item)} />
+        {item.stock > 0 ? (
+          <Button texto="Comprar ahora" onClick={() => addToCart(item)} />
+        ) : (
+          <p className="sin-stock">Sin stock</p>
+        )}
 
         <p className='garantia_y_stock'>Garantía 12 meses</p>
         <p className='garantia_y_stock'>Stock: {item.stock}</p>
