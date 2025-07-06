@@ -8,6 +8,7 @@ import OrderDetailPage from "../pages/Admin/Order/OrderDetailPage.jsx"
 import "./AdminRoutes.css"
 
 
+
 export default function AdminRoutes() {
     const navigate = useNavigate();
 
@@ -57,6 +58,8 @@ export default function AdminRoutes() {
                         </AdminLayout>
                     }
                 />
+
+        //Aqui comienza la ruta de ordenes
                 <Route path="/admin/orders"
                     element={
                         <AdminLayout>
@@ -64,6 +67,7 @@ export default function AdminRoutes() {
                         </AdminLayout>
                     }
                 />
+
                 <Route path="/admin/orders/:id"
                     element={
                         <AdminLayout>
@@ -71,6 +75,7 @@ export default function AdminRoutes() {
                         </AdminLayout>
                     }
                 />
+
             </Routes>
         </>
     );

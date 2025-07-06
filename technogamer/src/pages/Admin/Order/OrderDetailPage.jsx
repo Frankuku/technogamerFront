@@ -12,7 +12,7 @@ const OrderDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
   const [toast, setToast] = useState({ show: false, message: "", bg: "success" });
-
+  const token = localStorage.getItem("token");
   const showToast = (message, bg = "success") => {
     setToast({ show: true, message, bg });
   };
@@ -20,7 +20,13 @@ const OrderDetailPage = () => {
   const fetchOrder = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${API_URL}/orders/${id}`);
+      const { data } = await axios.get(`${API_URL}/orders/${id}`,
+        {
+          headers: {
+          Authorization: `${token}`,
+          },
+         }
+      );
       if (data.success) {
         setOrder(data.order);
         setStatus(data.order.status);
@@ -40,7 +46,12 @@ const OrderDetailPage = () => {
     try {
       await axios.patch(
         `${API_URL}/orders/${id}/status`,
-        { status: newStatus }
+        { status: newStatus },
+        {
+          headers: {
+          Authorization: `${token}`,
+          },
+        }
       );
       setStatus(newStatus);
       showToast("Estado actualizado", "success");

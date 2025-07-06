@@ -35,6 +35,7 @@ const AdminProductsPage = () => {
   const showToast = (message, bg = "success") => {
     setToast({ show: true, message, bg });
   };
+  const token = localStorage.getItem("token");
 
   const fetchCategories = async () => {
     try {
@@ -77,7 +78,9 @@ const AdminProductsPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de que deseas eliminar este producto?")) {
       try {
-        await axios.delete(`${API_URL}/products/${id}`);
+        await axios.delete(`${API_URL}/products/${id}`,{
+          headers: { Authorization: `${token}` },
+        });
         showToast("Producto eliminado", "success");
         fetchProducts(page);
       } catch (err) {

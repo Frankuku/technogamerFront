@@ -25,6 +25,8 @@ const StockControlPage = () => {
     setToast({ show: true, message, bg });
   };
 
+   const token = localStorage.getItem("token");
+
   const fetchCategories = async () => {
     try {
       const res = await axios.get(`${API_URL}/categories`);
@@ -81,7 +83,15 @@ const StockControlPage = () => {
     }
 
     try {
-      await axios.patch(`${API_URL}/products/${productId}`, { stock: newStock });
+      await axios.patch(
+        `${API_URL}/products/${productId}`,
+         { stock: newStock },
+          {
+            headers: {
+               Authorization: `${token}`
+            }
+         }
+      );
       setEditingStock((prev) => {
         const updated = { ...prev };
         delete updated[productId];
