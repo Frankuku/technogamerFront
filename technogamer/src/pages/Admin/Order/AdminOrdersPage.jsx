@@ -25,6 +25,7 @@ const AdminOrdersPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
+  const token = localStorage.getItem("token");
 
   const showToast = (message, bg = "success") => {
     setToast({ show: true, message, bg });
@@ -39,7 +40,14 @@ const AdminOrdersPage = () => {
       if (orderIdSearch) params.orderId = orderIdSearch;
       if (userSearch) params.userSearch = userSearch;
 
-      const { data } = await axios.get(`${API_URL}/orders`, { params });
+      const { data } = await axios.get(`${API_URL}/orders`, 
+        { params },
+        {
+          headers: {
+          Authorization: `${token}`,
+          },
+        }
+      );
 
       if (data.success) {
         setOrders(data.orders || []);
@@ -63,7 +71,6 @@ const AdminOrdersPage = () => {
   useEffect(() => {
     if (location.state?.refresh) {
       fetchOrders(1);
-      // Limpiar el estado
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);

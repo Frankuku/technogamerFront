@@ -24,6 +24,7 @@ const AdminUsersPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const debounceRef = useRef(null);
+  const token = localStorage.getItem("token");
 
   const limit = 5;
 
@@ -67,8 +68,14 @@ const AdminUsersPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("¿Eliminar este usuario?")) {
       try {
-        await axios.delete(`${API_URL}/users/${id}`);
-        showToast("Usuario eliminado", "danger");
+        await axios.delete(`${API_URL}/users/${id}`,
+         {
+          headers: {
+          Authorization: `${token}`,
+          },
+        }
+        );
+        showToast("Usuario eliminado", "success");
         fetchUsers(page);
       } catch (err) {
         showToast("Error al eliminar usuario", "danger");

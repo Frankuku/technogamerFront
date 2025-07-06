@@ -13,6 +13,7 @@ const UserFormModal = ({ show, onHide, user, onSave }) => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (user) {
@@ -56,34 +57,42 @@ const UserFormModal = ({ show, onHide, user, onSave }) => {
       return;
     }
 
-    setSaving(true);
+      setSaving(true);
+      const config = {
+        headers: {
+          Authorization: `${token}`,
+        },
+      };
 
-    try {
-      if (user) {
-        await axios.put(`${API_URL}/users/${user._id}`, {
+      try {
+        const url = user ? `${API_URL}/users/${user._id}` : `${API_URL}/users`;
+        const method = user ? "put" : "post";
+
+        const payload = {
           username,
           email,
           role,
-          ...(password ? { password } : {}),
-        });
-      } else {
-        await axios.post(`${API_URL}/users`, {
-          username,
-          email,
-          password,
-          role,
-        });
-      }
+          ...(user ? (password ? { password } : {}) : { password }),
+        };
 
-      onSave();
-      onHide();
-    } catch (err) {
-      console.error("Error al guardar usuario", err);
-      setErrors({ general: "Ocurrió un error al guardar. Verificá los datos." });
-    } finally {
-      setSaving(false);
-    }
-  };
+        await axios[method](url, payload, config);
+
+        onSave();
+        onHide();
+      } catch (err) {
+          const status = err?.response?.status;
+          const mensaje = err?.response?.data?.message || "Ocurrió un error al guardar. Verificá los datos.";
+         
+          if (status !== 400) {
+            console.error("Error inesperado al guardar usuario:", err);
+          }
+
+          setErrors({ general: mensaje });
+
+        } finally {
+          setSaving(false);
+        }
+};
 
   return (
     <Modal show={show} onHide={handleChange} backdrop="static" keyboard={false}>
