@@ -6,7 +6,7 @@ import AdminUsersPage from "../pages/Admin/Usuario/AdminUsersPage.jsx";
 import AdminOrdersPage from "../pages/Admin/Order/AdminOrdersPage.jsx";
 import OrderDetailPage from "../pages/Admin/Order/OrderDetailPage.jsx"
 import "./AdminRoutes.css"
-import RutaProtegida from "../pages/Admin/RutaProtegida/RutaProtegida.jsx"
+
 
 export default function AdminRoutes() {
     const navigate = useNavigate();
@@ -30,9 +30,7 @@ export default function AdminRoutes() {
             <Routes>
                //Aqui empiezan las rutas de la seccion de administracion
                 <Route path="/Admin" element={
-                    //<RutaProtegida rolRequerido="admin">          
                     <AdminLayout />
-                    //  </RutaProtegida>
                 } />
 
                 <Route path="/admin/products"
