@@ -1,3 +1,3 @@
-const API_URL = "https://technogamer.onrender.com";
+const API_URL = "https://technogamer.onrender.com/api";
 
 export default API_URL;
