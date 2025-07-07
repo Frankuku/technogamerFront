@@ -1,21 +1,23 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useCart } from "../../../hook/useCart.js";
 import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png';
 
 function Item({ producto }) {
-  const { addToCart, cart } = useCart();
-  const navigate = useNavigate();
+  const { addToCart, cart, cartCheckboxRef } = useCart(); // ✅ usamos el ref
 
-  // Verifica si ya está en el carrito
   const enCarrito = cart.some(item => item._id === producto._id);
 
   const handleAddToCart = (e) => {
-    e.preventDefault(); // evita que se active el <Link>
+    e.preventDefault();
     e.stopPropagation();
     addToCart(producto);
-    navigate("/carrito"); // redirige al carrito
+
+    // ✅ Abre el carrito (marca el checkbox)
+    if (cartCheckboxRef?.current) {
+      cartCheckboxRef.current.checked = true;
+    }
   };
 
   return (
