@@ -47,7 +47,7 @@ export function Cart() {
                         <CartItem
                             key={product.id}
                             id={product.id}
-                            image={product.image}
+                            image= {`https://technogamer.onrender.com${product.image}`}
                             name={product.name}
                             price={product.price}
                             quantity={product.quantity || 1}
