@@ -22,7 +22,7 @@ function Item({ producto }) {
     <Link to={`/producto/${producto._id}`} className="col-sm-12 col-md-5 col-lg-3 p-2">
       <div className="card">
         <img
-          src={`http://localhost:4000${producto.image}`}
+          src={`https://technogamer.onrender.com${product.image}`}
           className="card-img-top"
           alt={producto.name}
         />
