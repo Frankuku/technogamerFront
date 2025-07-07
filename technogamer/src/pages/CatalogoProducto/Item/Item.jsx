@@ -7,14 +7,14 @@ import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png';
 
 function Item({ producto }) {
-  const { addToCart, cartCheckboxRef } = useCart();
-  const [showToast, setShowToast] = useState(false);
+  const { addToCart, cartCheckboxRef } = useCart(); // ✅ ya no necesitamos cart
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(producto);
 
+    // ✅ Abre el carrito
     if (cartCheckboxRef?.current) {
       cartCheckboxRef.current.checked = true;
     }
@@ -57,15 +57,7 @@ function Item({ producto }) {
           </div>
         </div>
       </Link>
-
-      <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message="¡Producto agregado al carrito!"
-        bg="success"
-      />
-    </>
-  );
+      );
 }
 
-export default Item;
+      export default Item;
