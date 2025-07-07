@@ -5,16 +5,14 @@ import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png';
 
 function Item({ producto }) {
-  const { addToCart, cart, cartCheckboxRef } = useCart(); // ✅ usamos el ref
-
-  const enCarrito = cart.some(item => item._id === producto._id);
+  const { addToCart, cartCheckboxRef } = useCart(); // ✅ ya no necesitamos cart
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(producto);
 
-    // ✅ Abre el carrito (marca el checkbox)
+    // ✅ Abre el carrito
     if (cartCheckboxRef?.current) {
       cartCheckboxRef.current.checked = true;
     }
@@ -41,18 +39,12 @@ function Item({ producto }) {
             <p className="card-text">${producto.price}</p>
 
             {producto.stock > 0 ? (
-              enCarrito ? (
-                <Button variant="success" disabled>
-                  ✔ Agregado
-                </Button>
-              ) : (
-                <Button
-                  className="btn-carrito"
-                  onClick={handleAddToCart}
-                >
-                  <img src={carrito} alt="carrito" />
-                </Button>
-              )
+              <Button
+                className="btn-carrito"
+                onClick={handleAddToCart}
+              >
+                <img src={carrito} alt="carrito" />
+              </Button>
             ) : (
               <span className="sin-stock">Sin stock</span>
             )}
