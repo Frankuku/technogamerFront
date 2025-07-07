@@ -16,7 +16,7 @@ function Item({ producto }) {
 
       <div className="card " >
         <img
-          src={`http://localhost:4000${producto.image}`}
+          src={`https://technogamer.onrender.com${producto.image}`}
           className="card-img-top"
           alt={producto.image}
         />
