@@ -41,7 +41,7 @@ function ItemDetail() {
   return (
     <div className='item_producto'>
       <div>
-        <img src={`https://technogamer.onrender.com${item.image}`} alt="producto_img" />
+        <img src={`https://technogamer.onrender.com${products.image}`} alt="producto_img" />
       </div>
       <div className='informacion'>
         <h3>{item.name}</h3>
