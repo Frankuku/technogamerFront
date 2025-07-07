@@ -40,7 +40,7 @@ function Compra({ setModalType }) {
                         {cart.map((item) => (
                             <li key={item.id} className="lista_resumen">
                                 <div className="producto_elegido">
-                                    <img src={item.image} alt={item.name} width={80} />
+                                    <img src={`https://technogamer.onrender.com${item.image}`} alt={item.name} width={80} />
                                     <p>{item.name}</p>
                                 </div>
                                 <div className="acciones">
