@@ -16,6 +16,9 @@ function MiCompra() {
         if (!token) return;
 
         axios.get(`${API_URL}/orders/${orderId}`, {
+            headers: {
+                Authorization: token
+            }
         })
             .then(res => {
                 setOrder(res.data.order || res.data);
