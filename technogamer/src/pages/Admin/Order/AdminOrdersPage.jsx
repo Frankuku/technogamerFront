@@ -41,12 +41,6 @@ const AdminOrdersPage = () => {
       if (userSearch) params.userSearch = userSearch;
 
       const { data } = await axios.get(`${API_URL}/orders`,
-        
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        },
          { params }                              
       );
 
