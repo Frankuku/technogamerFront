@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { useCart } from "../../../hook/useCart.js"
 import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png'
+import API_URL from "../../../config/api.js";
 function Item({ producto }) {
   const { addToCart, cart } = useCart()
   const checkProductInCart = product => {
