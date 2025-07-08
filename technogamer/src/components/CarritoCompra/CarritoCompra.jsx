@@ -13,24 +13,28 @@ export function CartProvider({ children }) {
     }, [cart]);
 
     const addToCart = (product) => {
+        const productId = product._id || product.id;
+
         setCart(prevCart => {
-            const productInCart = prevCart.find(item => item.id === product.id);
+            const productInCart = prevCart.find(item => item._id === productId);
             if (productInCart) {
                 return prevCart.map(item =>
-                    item.id === product.id
+                    item._id === productId
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 );
             } else {
-                return [...prevCart, { ...product, quantity: 1 }];
+                return [...prevCart, { ...product, _id: productId, quantity: 1 }];
             }
         });
     };
 
     const decreaseQuantity = (product) => {
+        const productId = product._id || product.id;
+
         setCart(prevCart =>
             prevCart.flatMap(item => {
-                if (item.id === product.id) {
+                if (item._id === productId) {
                     if (item.quantity > 1) {
                         return [{ ...item, quantity: item.quantity - 1 }];
                     } else {
@@ -43,8 +47,10 @@ export function CartProvider({ children }) {
     };
 
     const removeFromCart = (product) => {
+        const productId = product._id || product.id;
+
         setCart(prevCart =>
-            prevCart.filter(item => item.id !== product.id)
+            prevCart.filter(item => item._id !== productId)
         );
     };
 
@@ -56,7 +62,7 @@ export function CartProvider({ children }) {
         <CartContext.Provider value={{
             cart,
             addToCart,
-            decreaseQuantity, // ✅ necesario para el botón "-"
+            decreaseQuantity,
             removeFromCart,
             clearCart
         }}>
@@ -64,3 +70,4 @@ export function CartProvider({ children }) {
         </CartContext.Provider>
     );
 }
+

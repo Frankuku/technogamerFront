@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // 👈 agregado useNavigate
 import isotipo from "../../assets/img/isotipo_technogamer.svg";
 import lupa from "../../assets/img/iconos/buscador.png";
 import Buscador from "../Buscardor/Buscardor";
@@ -13,12 +13,11 @@ import CustomModal from "../Modal/CustomModal";
 
 function Navbar({ modalType, setModalType }) {
     const [lastOrderId, setLastOrderId] = useState(null);
+    const navigate = useNavigate(); // 👈 hook de navegación
 
     useEffect(() => {
         const storedOrderId = localStorage.getItem("lastOrderId");
-        if (storedOrderId) {
-            setLastOrderId(storedOrderId);
-        }
+        if (storedOrderId) setLastOrderId(storedOrderId);
     }, []);
 
     const handleClose = () => setModalType(null);
@@ -35,7 +34,10 @@ function Navbar({ modalType, setModalType }) {
 
     const handleLogout = () => {
         localStorage.removeItem("logged");
-        window.location.reload();
+        localStorage.removeItem("user");
+        localStorage.removeItem("rol");
+        // Agrega más claves si es necesario limpiar más info
+        navigate("/"); // 👈 redirige al home
     };
 
     return (
@@ -45,8 +47,8 @@ function Navbar({ modalType, setModalType }) {
                     {isLogged ? (
                         <>
                             <p className="iconos fs-5 d-block align-self-center">
-                                Hola, {localStorage.getItem("rol") === "admin" ? "Admin" : user?.nombre || "Usuario"}!
-                            </p>
+    Hola, {localStorage.getItem("rol") === "admin" ? "Admin" : user?.username || "Usuario"}!
+</p>
                             <button className="iconos forlogin_forregister" onClick={handleLogout}>
                                 <p>Cerrar sesión</p>
                             </button>

@@ -23,7 +23,7 @@ function Login({ abrirModalRegister, onLoginSuccess }) {
       return; // Terminar aquí para no hacer la llamada al backend
     }
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const res = await fetch(`https://technogamer.onrender.com/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

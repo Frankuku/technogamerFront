@@ -6,11 +6,6 @@ import iconoEquipo from '../../assets/img/icono_equipo.jpg';
 const equipo = [
   { nombre: "Franco Gerez", imagen: iconoEquipo },
   { nombre: "Claudio Javier Gonzalez", imagen: iconoEquipo },
-  { nombre: "Ever Emmanuel Cardozo", imagen: iconoEquipo },
-  { nombre: "Enzo Lucas Paez Costilla", imagen: iconoEquipo },
-  { nombre: "Franco David Peña", imagen: iconoEquipo },
-  { nombre: "Lucila Nadia Amador", imagen: iconoEquipo },
-  { nombre: "Ingrid Sofía Sanchez", imagen: iconoEquipo },
 ];
 
 function About() {

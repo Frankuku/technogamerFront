@@ -1,4 +1,4 @@
-import { useId, useRef } from "react";
+import { useId } from "react";
 import './Cart.css';
 import { useCart } from "../../hook/useCart.js";
 import carrito from "../../assets/img/iconos/carrito.png";
@@ -23,9 +23,14 @@ function CartItem({ image, name, price, quantity, decreaseQuantity, onAdd, onRem
 
 export function Cart() {
     const cartCheckboxId = useId();
-    const checkboxRef = useRef();
 
-    const { cart, addToCart, removeFromCart, decreaseQuantity } = useCart();
+    const {
+        cart,
+        addToCart,
+        removeFromCart,
+        decreaseQuantity,
+        cartCheckboxRef, // ✅ traído del contexto
+    } = useCart();
 
     const total = cart.reduce(
         (acc, product) => acc + product.price * (product.quantity || 1),
@@ -37,7 +42,7 @@ export function Cart() {
             <label className="cart-button iconos" htmlFor={cartCheckboxId}>
                 <img src={carrito} alt="carrito" />
             </label>
-            <input id={cartCheckboxId} type="checkbox" hidden ref={checkboxRef} />
+            <input id={cartCheckboxId} type="checkbox" hidden ref={cartCheckboxRef} />
 
             <aside className="cart">
                 <ul className="m-0 carrito-select">
@@ -45,15 +50,14 @@ export function Cart() {
 
                     {cart.map(product => (
                         <CartItem
-                            key={product.id}
-                            id={product.id}
-                            image={product.image}
+                            key={product._id}
+                            image={`https://technogamer.onrender.com${product.image}`}
                             name={product.name}
                             price={product.price}
                             quantity={product.quantity || 1}
                             onAdd={() => addToCart(product)}
                             onRemove={() => removeFromCart(product)}
-                            decreaseQuantity={() => decreaseQuantity(product)} // ✅ agregado
+                            decreaseQuantity={() => decreaseQuantity(product)}
                         />
                     ))}
                 </ul>
@@ -63,7 +67,10 @@ export function Cart() {
                         <div className="total-precio">
                             <strong>Total: ${total}</strong>
                         </div>
-                        <Link to="/compra" onClick={() => (checkboxRef.current.checked = false)}>
+                        <Link
+                            to="/compra"
+                            onClick={() => (cartCheckboxRef.current.checked = false)} // ✅ cierra el modal
+                        >
                             <Button texto="Seguir con la compra" />
                         </Link>
                     </>
@@ -74,3 +81,4 @@ export function Cart() {
 }
 
 export default Cart;
+
