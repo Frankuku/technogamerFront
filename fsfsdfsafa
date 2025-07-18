@@ -1,0 +1,122 @@
+[33mcommit f2ef0d8581d0f8746151036fd6907e9a2afe0fa7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: Claudio Gonzalez <you@example.com>
+Date:   Sat Apr 19 19:13:29 2025 -0300
+
+    se agrega busqueda por categoria
+
+[33mcommit cfa8f2498fcbe764f7eb8415130c6a461d42c67e[m
+Author: Claudio Gonzalez <you@example.com>
+Date:   Thu Apr 17 16:39:32 2025 -0300
+
+    se agrega barra de busqueda
+
+[33mcommit a4ed60efd9e470fc3518d4ceb1220fd9f0688a0d[m
+Author: Claudio Gonzalez <you@example.com>
+Date:   Tue Apr 15 21:54:04 2025 -0300
+
+    re realizo detalle del producto
+
+[33mcommit 3f61938eb697138944156c30a19e57daac7a7802[m
+Author: Claudio Gonzalez <you@example.com>
+Date:   Tue Apr 15 03:30:34 2025 -0300
+
+    se avanzo con catalogo de producto y detalles de producto
+
+[33mcommit 2600e4e635a4ee5f9584eb656d7f3760149fed8b[m
+Author: Claudio Gonzalez <you@example.com>
+Date:   Tue Apr 15 00:58:37 2025 -0300
+
+    inicio de catalogo de producto
+
+[33mcommit c6a49bfe8df1c223eb2fec6df96360929205841f[m[33m ([m[1;32mmain[m[33m)[m
+Author: Claudio Gonzalez <you@example.com>
+Date:   Mon Apr 14 19:14:14 2025 -0300
+
+    se corrigen error de paquetes
+
+[33mcommit 2bc14d49c1b6df02558032a92d9277e114a61fd3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: f02ae71 1779310
+Author: Franco David Peña <116514570+francoDP97@users.noreply.github.com>
+Date:   Sun Apr 13 21:02:12 2025 -0300
+
+    Merge pull request #1 from francoDP97/rama-franco-g
+    
+    Rama franco g
+
+[33mcommit 177931096034421c7d4fb6c583f1940159e95506[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Sat Apr 12 13:18:45 2025 -0300
+
+    article
+
+[33mcommit 473e74ae1d80b84c2e8738d2d59843d2bf6ea383[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Sat Apr 12 12:18:00 2025 -0300
+
+    articulos
+
+[33mcommit 16363625f6f9215b304ef2c638f130cb01e9c065[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Sat Apr 12 10:10:11 2025 -0300
+
+    articulosTitulos
+
+[33mcommit 5779d613901473d9b27d5c4b26cdd9c24dc77d94[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Sat Apr 12 09:36:06 2025 -0300
+
+    actualizacion
+
+[33mcommit 4231a7576d7b89b4cf5791c068a7f5ed7ff2fa08[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Thu Apr 10 21:01:39 2025 -0300
+
+    productosInicio
+
+[33mcommit 11e53364a7d14ae48847c6ad22bf8e39c0bac3a8[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Thu Apr 10 18:34:43 2025 -0300
+
+    productosDeSection
+
+[33mcommit 8469e4c07f6d5eeefc329fac0d063594969c011e[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Thu Apr 10 16:21:17 2025 -0300
+
+    sectionInicial
+
+[33mcommit ab975a070735de61973334cc612a6adbc294106a[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Thu Apr 10 14:51:41 2025 -0300
+
+    mainFaceUno
+
+[33mcommit 54ab332f6743c3e409454d2b4e86bf380e630fbf[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Tue Apr 8 23:46:07 2025 -0300
+
+    prueba
+
+[33mcommit 79e0eb38d4d9d6f34bf0af99d9bce471b8c1e46c[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Tue Apr 8 23:29:12 2025 -0300
+
+    inicio_de_navabar2
+
+[33mcommit 483ea7143c451971e9915af789d85f01d1190a13[m
+Author: FrancoGerez <franconicolasgerez1998@gmail.com>
+Date:   Tue Apr 8 22:59:35 2025 -0300
+
+    inicio del navbar
+
+[33mcommit f02ae71ba8e944cde39635da84893ca046e349db[m
+Author: franco <francoo.drummer@gmail.com>
+Date:   Wed Apr 2 21:58:33 2025 -0300
+
+    add bootstrap and routers
+
+[33mcommit dce915db8c49b5622f47db41c43385781b29aa7f[m
+Author: franco <francoo.drummer@gmail.com>
+Date:   Wed Apr 2 21:45:46 2025 -0300
+
+    create proyect

@@ -4,16 +4,15 @@ import axios from 'axios';
 import './ItemDetail.css';
 import Button from '../../../components/button/Button';
 import { useCart } from "../../../hook/useCart";
-import ToastMessage from "../../../components/ToastMessage"; // <-- Importá tu Toast aquí
+import ToastMessage from "../../../components/ToastMessage";
 import API_URL from '../../../config/api';
 
 function ItemDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart, cartCheckboxRef } = useCart(); // <-- añadí cartCheckboxRef para abrir carrito
-  const [showToast, setShowToast] = useState(false); // estado para el toast
-
+  const { addToCart, cartCheckboxRef } = useCart();
+  const [showToast, setShowToast] = useState(false);
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -36,7 +35,7 @@ function ItemDetail() {
   const handleBuyNow = () => {
     addToCart(item);
 
-    // Abrir carrito si usás el checkbox ref
+
     if (cartCheckboxRef?.current) {
       cartCheckboxRef.current.checked = true;
     }

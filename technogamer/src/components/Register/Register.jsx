@@ -26,6 +26,19 @@ function Register({ abrirModalLogin }) {
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // ✅ 1. Validar campos vacíos
+    if (!formData.nombre || !formData.apellido || !formData.email || !formData.pass || !formData.repitePass) {
+      alert('Todos los campos son obligatorios');
+      return;
+    }
+
+    // ✅ 2. Validar longitud mínima de contraseña
+    if (formData.pass.length < 6) {
+      alert('La contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+
+    // ✅ 3. Validar que las contraseñas coincidan
     if (formData.pass !== formData.repitePass) {
       alert('Las contraseñas no coinciden');
       return;
@@ -47,12 +60,11 @@ function Register({ abrirModalLogin }) {
         body: JSON.stringify(user)
       });
 
-
       const data = await res.json();
 
       if (res.ok) {
         alert("Usuario registrado con éxito");
-        abrirModalLogin(); // abrís el modal de login como ya hacías
+        abrirModalLogin();
       } else {
         alert(data.message || "Error al registrar usuario");
       }
@@ -61,7 +73,6 @@ function Register({ abrirModalLogin }) {
       alert("Error del servidor al registrar usuario");
     }
   };
-
 
   return (
     <div className="register-container">
@@ -74,7 +85,6 @@ function Register({ abrirModalLogin }) {
           value={formData.nombre}
           onChange={handleChange}
           className="register-input"
-          required
         />
         <input
           type="text"
@@ -83,7 +93,6 @@ function Register({ abrirModalLogin }) {
           value={formData.apellido}
           onChange={handleChange}
           className="register-input"
-          required
         />
         <input
           type="email"
@@ -92,7 +101,6 @@ function Register({ abrirModalLogin }) {
           value={formData.email}
           onChange={handleChange}
           className="register-input"
-          required
         />
 
         <input
@@ -102,7 +110,6 @@ function Register({ abrirModalLogin }) {
           value={formData.pass}
           onChange={handleChange}
           className="register-input"
-          required
         />
         <input
           type="password"
@@ -111,7 +118,6 @@ function Register({ abrirModalLogin }) {
           value={formData.repitePass}
           onChange={handleChange}
           className="register-input"
-          required
         />
 
         <div className="register-footer">
