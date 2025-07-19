@@ -2,21 +2,31 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useCart } from "../../../hook/useCart.js";
-import ToastMessage from "../../../components/ToastMessage.jsx";  // <-- Importa tu toast
+import ToastMessage from "../../../components/ToastMessage.jsx";
 import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png';
 
 function Item({ producto }) {
-  const { addToCart, cartCheckboxRef } = useCart();
+  const { addToCart, isStockAvailable, cartCheckboxRef } = useCart();
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastBg, setToastBg] = useState("success");
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(producto);
 
-    if (cartCheckboxRef?.current) {
-      cartCheckboxRef.current.checked = true;
+    if (isStockAvailable(producto)) {
+      addToCart(producto);
+      setToastMessage("¡Producto agregado al carrito!");
+      setToastBg("success");
+
+      if (cartCheckboxRef?.current) {
+        cartCheckboxRef.current.checked = true;
+      }
+    } else {
+      setToastMessage("Ya agregaste todo el stock disponible.");
+      setToastBg("danger");
     }
 
     setShowToast(true);
@@ -61,8 +71,8 @@ function Item({ producto }) {
       <ToastMessage
         show={showToast}
         onClose={() => setShowToast(false)}
-        message="¡Producto agregado al carrito!"
-        bg="success"
+        message={toastMessage}
+        bg={toastBg}
       />
     </>
   );
