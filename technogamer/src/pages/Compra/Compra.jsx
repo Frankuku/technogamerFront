@@ -2,23 +2,52 @@ import { useCart } from "../../hook/useCart.js";
 import Carrito from "../../assets/img/iconos/carrito.png"
 import Button from "../../components/button/Button.jsx"
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import ToastMessage from "../../components/ToastMessage.jsx"; // asumo que lo tenés
 import "./Compra.css"
+
 function Compra({ setModalType }) {
-    const { cart, clearCart, addToCart, removeFromCart } = useCart();
+    const { cart, clearCart, addToCart, removeFromCart, decreaseQuantity, isStockAvailable } = useCart();
     const navigate = useNavigate();
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: '',
+        bg: 'danger',
+    });
 
     const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+    const handleAddToCart = (item) => {
+        if (isStockAvailable(item)) {
+            addToCart(item);
+        } else {
+            setToast({
+                show: true,
+                message: `¡Máximo stock alcanzado para "${item.name}"!`,
+                bg: 'danger'
+            });
+        }
+    };
+
     const handleClick = () => {
         const isLogged = localStorage.getItem("logged");
-        console.log("Continuar clickeado");
         if (isLogged === "true") {
             navigate("/Datos");
         } else {
             setModalType("login");
-            console.log("modalType seteado a login");
         }
     };
+
+    // Ocultar toast automáticamente después de 3 segundos
+    useEffect(() => {
+        if (toast.show) {
+            const timer = setTimeout(() => {
+                setToast(prev => ({ ...prev, show: false }));
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [toast.show]);
 
     return (
         <div className="compra-container">
@@ -44,8 +73,9 @@ function Compra({ setModalType }) {
                                     <p>{item.name}</p>
                                 </div>
                                 <div className="acciones">
-                                    <button onClick={() => addToCart(item)}>+ </button>
+                                    <button onClick={() => handleAddToCart(item)}>+ </button>
                                     <p>{item.quantity}</p>
+                                    <button onClick={() => decreaseQuantity(item)}>-</button>
                                     <p> ${item.price * item.quantity}</p>
                                     <button onClick={() => removeFromCart(item)}>🗑</button>
                                 </div>
@@ -62,7 +92,15 @@ function Compra({ setModalType }) {
                     </div>
                 </div>
             )}
+
+            <ToastMessage
+                show={toast.show}
+                onClose={() => setToast({ ...toast, show: false })}
+                message={toast.message}
+                bg={toast.bg}
+            />
         </div>
     );
 }
+
 export default Compra;

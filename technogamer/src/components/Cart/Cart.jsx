@@ -1,21 +1,28 @@
-import { useId } from "react";
+import { useId, useState, useEffect } from "react";
 import './Cart.css';
 import { useCart } from "../../hook/useCart.js";
 import carrito from "../../assets/img/iconos/carrito.png";
 import Button from "../button/Button.jsx";
 import { Link } from "react-router-dom";
+import ToastMessage from "../ToastMessage.jsx";
 
-function CartItem({ image, name, price, quantity, decreaseQuantity, onAdd, onRemove }) {
+function CartItem({ product, decreaseQuantity, onAdd, onRemove }) {
     return (
         <li>
-            <img src={image} alt={name} />
-            <h3>{name}</h3>
-            <div>${price * quantity}</div>
-            <small>Cantidad: {quantity}</small>
+            <img src={`https://technogamer.onrender.com${product.image}`} alt={product.name} />
+            <h3>{product.name}</h3>
+            <div>${product.price * product.quantity}</div>
+            <small>Cantidad: {product.quantity}</small>
             <div className="botones">
-                <button onClick={onAdd}>+</button>
-                <button onClick={decreaseQuantity}>-</button>
-                <button onClick={onRemove}>🗑</button>
+                <button
+                    onClick={() => onAdd.handler()}
+                    disabled={!onAdd.stockAvailable}
+                    title={!onAdd.stockAvailable ? "No hay más stock" : "Agregar uno más"}
+                >
+                    +
+                </button>
+                <button onClick={() => decreaseQuantity(product)}>-</button>
+                <button onClick={() => onRemove(product)}>🗑</button>
             </div>
         </li>
     );
@@ -29,13 +36,44 @@ export function Cart() {
         addToCart,
         removeFromCart,
         decreaseQuantity,
-        cartCheckboxRef, // ✅ traído del contexto
+        isStockAvailable,
+        cartCheckboxRef,
     } = useCart();
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: '',
+        bg: 'danger'
+    });
 
     const total = cart.reduce(
         (acc, product) => acc + product.price * (product.quantity || 1),
         0
     );
+
+    // Mostrar toast con mensaje personalizado
+    const showToast = (message) => {
+        setToast({ show: true, message, bg: 'danger' });
+    };
+
+    // Control de stock y toast en el botón +
+    const handleAddToCart = (product) => {
+        if (isStockAvailable(product)) {
+            addToCart(product);
+        } else {
+            showToast(`¡Máximo stock alcanzado para "${product.name}"!`);
+        }
+    };
+
+    // Ocultar toast automáticamente después de 3 segundos
+    useEffect(() => {
+        if (toast.show) {
+            const timer = setTimeout(() => {
+                setToast(prev => ({ ...prev, show: false }));
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [toast.show]);
 
     return (
         <>
@@ -51,13 +89,13 @@ export function Cart() {
                     {cart.map(product => (
                         <CartItem
                             key={product._id}
-                            image={`https://technogamer.onrender.com${product.image}`}
-                            name={product.name}
-                            price={product.price}
-                            quantity={product.quantity || 1}
-                            onAdd={() => addToCart(product)}
-                            onRemove={() => removeFromCart(product)}
-                            decreaseQuantity={() => decreaseQuantity(product)}
+                            product={product}
+                            onAdd={{
+                                handler: () => handleAddToCart(product),
+                                stockAvailable: isStockAvailable(product)
+                            }}
+                            onRemove={removeFromCart}
+                            decreaseQuantity={decreaseQuantity}
                         />
                     ))}
                 </ul>
@@ -69,16 +107,22 @@ export function Cart() {
                         </div>
                         <Link
                             to="/compra"
-                            onClick={() => (cartCheckboxRef.current.checked = false)} // ✅ cierra el modal
+                            onClick={() => (cartCheckboxRef.current.checked = false)}
                         >
                             <Button texto="Seguir con la compra" />
                         </Link>
                     </>
                 )}
             </aside>
+
+            <ToastMessage
+                show={toast.show}
+                onClose={() => setToast({ ...toast, show: false })}
+                message={toast.message}
+                bg={toast.bg}
+            />
         </>
     );
 }
 
 export default Cart;
-

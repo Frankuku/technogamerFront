@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 
 export const CartContext = createContext();
 
@@ -7,6 +7,9 @@ export function CartProvider({ children }) {
         const storedCart = localStorage.getItem("cart");
         return storedCart ? JSON.parse(storedCart) : [];
     });
+
+    // Ref para abrir el carrito desde cualquier parte
+    const cartCheckboxRef = useRef(null);
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -38,7 +41,8 @@ export function CartProvider({ children }) {
                     if (item.quantity > 1) {
                         return [{ ...item, quantity: item.quantity - 1 }];
                     } else {
-                        return []; // elimina si es la última unidad
+                        // elimina si es la última unidad
+                        return [];
                     }
                 }
                 return [item];
@@ -48,26 +52,31 @@ export function CartProvider({ children }) {
 
     const removeFromCart = (product) => {
         const productId = product._id || product.id;
-
-        setCart(prevCart =>
-            prevCart.filter(item => item._id !== productId)
-        );
+        setCart(prevCart => prevCart.filter(item => item._id !== productId));
     };
 
     const clearCart = () => {
         setCart([]);
     };
 
+    const isStockAvailable = (product) => {
+        const productId = product._id || product.id;
+        const cartItem = cart.find(item => item._id === productId);
+        const currentQuantity = cartItem?.quantity || 0;
+        return currentQuantity < product.stock;
+    };
+
     return (
         <CartContext.Provider value={{
             cart,
             addToCart,
-            decreaseQuantity,
+            decreaseQuantity,  // <-- Aquí la agregamos
             removeFromCart,
-            clearCart
+            clearCart,
+            isStockAvailable,
+            cartCheckboxRef
         }}>
             {children}
         </CartContext.Provider>
     );
 }
-

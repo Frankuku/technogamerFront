@@ -47,8 +47,8 @@ function Navbar({ modalType, setModalType }) {
                     {isLogged ? (
                         <>
                             <p className="iconos fs-5 d-block align-self-center">
-    Hola, {localStorage.getItem("rol") === "admin" ? "Admin" : user?.username || "Usuario"}!
-</p>
+                                Hola, {localStorage.getItem("rol") === "admin" ? "Admin" : user?.username || "Usuario"}!
+                            </p>
                             <button className="iconos forlogin_forregister" onClick={handleLogout}>
                                 <p>Cerrar sesión</p>
                             </button>

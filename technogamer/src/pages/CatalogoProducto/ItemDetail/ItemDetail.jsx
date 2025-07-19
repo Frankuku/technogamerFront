@@ -11,8 +11,9 @@ function ItemDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart, cartCheckboxRef } = useCart();
-  const [showToast, setShowToast] = useState(false);
+  const { addToCart, isStockAvailable, cartCheckboxRef } = useCart();
+  const [toast, setToast] = useState({ show: false, message: "", bg: "" });
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -22,8 +23,7 @@ function ItemDetail() {
         }
         setItem(res.data.product);
       } catch (err) {
-        const mensajeError = err?.response?.data?.message || err?.message || "Error desconocido";
-        console.error("Error al cargar el producto:", mensajeError);
+        console.error("Error al cargar el producto:", err.message);
       } finally {
         setLoading(false);
       }
@@ -33,14 +33,25 @@ function ItemDetail() {
   }, [id]);
 
   const handleBuyNow = () => {
+    if (!isStockAvailable(item)) {
+      setToast({
+        show: true,
+        message: "No hay más stock disponible de este producto.",
+        bg: "danger"
+      });
+      return;
+    }
+
     addToCart(item);
-
-
     if (cartCheckboxRef?.current) {
       cartCheckboxRef.current.checked = true;
     }
 
-    setShowToast(true);
+    setToast({
+      show: true,
+      message: "¡Producto agregado al carrito!",
+      bg: "success"
+    });
   };
 
   if (loading) return <p>Cargando producto...</p>;
@@ -73,12 +84,11 @@ function ItemDetail() {
         </div>
       </div>
 
-      {/* Toast notificación */}
       <ToastMessage
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        message="¡Producto agregado al carrito!"
-        bg="success"
+        show={toast.show}
+        onClose={() => setToast({ ...toast, show: false })}
+        message={toast.message}
+        bg={toast.bg}
       />
     </>
   );
