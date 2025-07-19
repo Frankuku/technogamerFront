@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './About.css';
 import iconoEquipo from '../../assets/img/icono_equipo.jpg';
 
@@ -63,7 +64,9 @@ function About() {
         <p>
           Nuestra sede está en Tucumán, Argentina. Seguimos impulsando la innovación, buscando ser referentes en hardware y gaming experience.
         </p>
-        <button className="about2-btn">Saber más</button>
+        <Link to="/Error">
+          <button className="about2-btn">Saber más</button>
+        </Link>
       </section>
     </div>
   );
