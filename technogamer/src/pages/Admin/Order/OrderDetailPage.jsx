@@ -13,6 +13,7 @@ const OrderDetailPage = () => {
   const [status, setStatus] = useState("");
   const [toast, setToast] = useState({ show: false, message: "", bg: "success" });
   const token = localStorage.getItem("token");
+
   const showToast = (message, bg = "success") => {
     setToast({ show: true, message, bg });
   };
@@ -20,13 +21,11 @@ const OrderDetailPage = () => {
   const fetchOrder = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${API_URL}/orders/${id}`,
-        {
-          headers: {
+      const { data } = await axios.get(`${API_URL}/orders/${id}`, {
+        headers: {
           Authorization: `${token}`,
-          },
-         }
-      );
+        },
+      });
       if (data.success) {
         setOrder(data.order);
         setStatus(data.order.status);
@@ -43,13 +42,19 @@ const OrderDetailPage = () => {
 
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
+
+    if (newStatus === status) return;
+
+    const confirmChange = window.confirm(`¿Estás seguro de cambiar el estado a "${newStatus}"?`);
+    if (!confirmChange) return;
+
     try {
       await axios.patch(
         `${API_URL}/orders/${id}/status`,
         { status: newStatus },
         {
           headers: {
-          Authorization: `${token}`,
+            Authorization: `${token}`,
           },
         }
       );
@@ -78,16 +83,18 @@ const OrderDetailPage = () => {
         ← Volver
       </Button>
       <h3>Detalle de Orden #{order._id}</h3>
+
       <Row className="mb-3">
         <Col md={6}>
           <h5>Usuario</h5>
-          <p>{order.user.username || order.user.email}</p>
+          <p>{order.user ? order.user.username || order.user.email : "Usuario no disponible"}</p>
         </Col>
         <Col md={6}>
           <h5>Fecha</h5>
           <p>{new Date(order.createdAt).toLocaleString()}</p>
         </Col>
       </Row>
+
       <Row className="mb-3">
         <Col md={4}>
           <h5>Dirección de envío</h5>
@@ -102,14 +109,27 @@ const OrderDetailPage = () => {
         </Col>
         <Col md={4}>
           <h5>Estado</h5>
-          <Form.Select value={status} onChange={handleStatusChange} size="sm">
+          <Form.Select
+            value={status}
+            onChange={handleStatusChange}
+            size="sm"
+            disabled={status === "delivered" || status === "cancelled"}
+          >
             <option value="pending">Pendiente</option>
             <option value="sent">Enviado</option>
             <option value="delivered">Entregado</option>
             <option value="cancelled">Cancelado</option>
           </Form.Select>
+
+          {(status === "delivered" || status === "cancelled") && (
+            <div className="mt-2 text-warning bg-dark p-2 rounded">
+              ⚠️ No se puede modificar el estado porque la orden fue{" "}
+              {status === "delivered" ? "entregada" : "cancelada"}.
+            </div>
+          )}
         </Col>
       </Row>
+
       <h5>Items</h5>
       <Table striped bordered hover>
         <thead>
@@ -131,6 +151,7 @@ const OrderDetailPage = () => {
           ))}
         </tbody>
       </Table>
+
       <Row className="justify-content-end">
         <Col md={4} className="text-end">
           <h5>Total items: {order.totalItems}</h5>
