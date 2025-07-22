@@ -21,6 +21,7 @@ const AdminUsersPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterRole, setFilterRole] = useState("all");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const debounceRef = useRef(null);
@@ -32,11 +33,12 @@ const AdminUsersPage = () => {
     setToast({ show: true, message, bg });
   };
 
-  const fetchUsers = async (pageNumber = 1, search = searchTerm) => {
+  const fetchUsers = async (pageNumber = 1, search = searchTerm, role = filterRole) => {
     try {
       setLoading(true);
       const params = { page: pageNumber, limit };
       if (search.trim()) params.search = search;
+      if (role !== "all") params.role = role;
 
       const res = await axios.get(`${API_URL}/users`, { params });
       setUsers(res.data.users || []);
@@ -52,12 +54,10 @@ const AdminUsersPage = () => {
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      fetchUsers(1, searchTerm);
+      fetchUsers(1, searchTerm, filterRole);
     }, 400);
     return () => clearTimeout(debounceRef.current);
-  }, [searchTerm]);
-
-
+  }, [searchTerm, filterRole]);
 
   const handlePageChange = (num) => {
     if (num >= 1 && num <= totalPages) {
@@ -68,13 +68,11 @@ const AdminUsersPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("¿Eliminar este usuario?")) {
       try {
-        await axios.delete(`${API_URL}/users/${id}`,
-         {
+        await axios.delete(`${API_URL}/users/${id}`, {
           headers: {
-          Authorization: `${token}`,
+            Authorization: `${token}`,
           },
-        }
-        );
+        });
         showToast("Usuario eliminado", "success");
         fetchUsers(page);
       } catch (err) {
@@ -113,6 +111,18 @@ const AdminUsersPage = () => {
           />
         </Col>
 
+        <Col xs="auto">
+          <Form.Select
+            size="sm"
+            value={filterRole}
+            onChange={(e) => setFilterRole(e.target.value)}
+          >
+            <option value="all">Todos</option>
+            <option value="user">Usuarios</option>
+            <option value="admin">Administradores</option>
+          </Form.Select>
+        </Col>
+
         <Col xs="auto" className="ms-auto">
           <Button size="sm" onClick={handleNew}>
             + Nuevo Usuario
@@ -141,23 +151,31 @@ const AdminUsersPage = () => {
                   </td>
                 </tr>
               ) : (
-                users.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td>
-                      <div className="d-flex gap-2">
-                        <Button size="sm" variant="warning" onClick={() => handleEdit(user)}>
-                          Editar
-                        </Button>
-                        <Button size="sm" variant="danger" onClick={() => handleDelete(user._id)}>
-                          Eliminar
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                users.map((user) => {
+                  const isAdmin = user.role === "admin";
+
+                  return (
+                    <tr key={user._id}>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td>{user.role}</td>
+                      <td>
+                        {!isAdmin ? (
+                          <div className="d-flex gap-2">
+                            <Button size="sm" variant="warning" onClick={() => handleEdit(user)}>
+                              Editar
+                            </Button>
+                            <Button size="sm" variant="danger" onClick={() => handleDelete(user._id)}>
+                              Eliminar
+                            </Button>
+                          </div>
+                        ) : (
+                          <span className="text-muted">Sin acciones</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </Table>
