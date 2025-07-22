@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from '../button/Button'; // Asegúrate que existe
-import API_URL from '../../config/api.js'; // ajustá la ruta según la carpeta
+import Button from '../button/Button';
+import API_URL from '../../config/api.js';
 import './Register.css';
 
 function Register({ abrirModalLogin }) {
@@ -16,33 +16,36 @@ function Register({ abrirModalLogin }) {
     repitePass: '',
   });
 
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: '' })); // limpiar error al escribir
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    const newErrors = {};
 
-    // ✅ 1. Validar campos vacíos
-    if (!formData.nombre || !formData.apellido || !formData.email || !formData.pass || !formData.repitePass) {
-      alert('Todos los campos son obligatorios');
-      return;
+    // Validaciones
+    if (!formData.nombre) newErrors.nombre = 'El nombre es obligatorio';
+    if (!formData.apellido) newErrors.apellido = 'El apellido es obligatorio';
+    if (!formData.email) newErrors.email = 'El email es obligatorio';
+    if (!formData.pass) newErrors.pass = 'La contraseña es obligatoria';
+    if (!formData.repitePass) newErrors.repitePass = 'Debes repetir la contraseña';
+
+    if (formData.pass && formData.pass.length < 6) {
+      newErrors.pass = 'La contraseña debe tener al menos 6 caracteres';
     }
 
-    // ✅ 2. Validar longitud mínima de contraseña
-    if (formData.pass.length < 6) {
-      alert('La contraseña debe tener al menos 6 caracteres');
-      return;
-    }
-
-    // ✅ 3. Validar que las contraseñas coincidan
     if (formData.pass !== formData.repitePass) {
-      alert('Las contraseñas no coinciden');
-      return;
+      newErrors.repitePass = 'Las contraseñas no coinciden';
     }
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return; // Si hay errores, detener
 
     const user = {
       username: `${formData.nombre} ${formData.apellido}`,
@@ -63,14 +66,13 @@ function Register({ abrirModalLogin }) {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Usuario registrado con éxito");
         abrirModalLogin();
       } else {
-        alert(data.message || "Error al registrar usuario");
+        setErrors({ general: data.message || "Error al registrar usuario" });
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error del servidor al registrar usuario");
+      setErrors({ general: "Error del servidor al registrar usuario" });
     }
   };
 
@@ -86,6 +88,8 @@ function Register({ abrirModalLogin }) {
           onChange={handleChange}
           className="register-input"
         />
+        {errors.nombre && <p className="error-text">{errors.nombre}</p>}
+
         <input
           type="text"
           name="apellido"
@@ -94,6 +98,8 @@ function Register({ abrirModalLogin }) {
           onChange={handleChange}
           className="register-input"
         />
+        {errors.apellido && <p className="error-text">{errors.apellido}</p>}
+
         <input
           type="email"
           name="email"
@@ -102,6 +108,7 @@ function Register({ abrirModalLogin }) {
           onChange={handleChange}
           className="register-input"
         />
+        {errors.email && <p className="error-text">{errors.email}</p>}
 
         <input
           type="password"
@@ -111,6 +118,8 @@ function Register({ abrirModalLogin }) {
           onChange={handleChange}
           className="register-input"
         />
+        {errors.pass && <p className="error-text">{errors.pass}</p>}
+
         <input
           type="password"
           name="repitePass"
@@ -119,6 +128,9 @@ function Register({ abrirModalLogin }) {
           onChange={handleChange}
           className="register-input"
         />
+        {errors.repitePass && <p className="error-text">{errors.repitePass}</p>}
+
+        {errors.general && <p className="error-text">{errors.general}</p>}
 
         <div className="register-footer">
           <Button texto="REGISTRARME" type="submit" />
