@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import ToastMessage from "../../../components/ToastMessage";
 import API_URL from "../../../config/api";
 
+
 const StockControlPage = () => {
   const [products, setProducts] = useState([]);
   const [editingStock, setEditingStock] = useState({});
@@ -25,7 +26,7 @@ const StockControlPage = () => {
     setToast({ show: true, message, bg });
   };
 
-   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const fetchCategories = async () => {
     try {
@@ -67,13 +68,16 @@ const StockControlPage = () => {
   }, [page, searchTerm, selectedCategory]);
 
   const handleChangeStock = (productId, value) => {
+    const number = parseInt(value);
+    if (number < 0) return; // prevenir entrada negativa
+
     setEditingStock((prev) => ({
       ...prev,
       [productId]: value,
     }));
   };
 
-  const handleSaveStock = async (productId) => {
+  const handleSaveStock = async (productId, currentStock) => {
     const rawValue = editingStock[productId];
     const newStock = parseInt(rawValue);
 
@@ -82,15 +86,23 @@ const StockControlPage = () => {
       return;
     }
 
+    if (newStock === currentStock) {
+      showToast("No hay cambios en el stock", "warning");
+      return;
+    }
+
+    const confirm = window.confirm("¿Estás seguro de actualizar el stock?");
+    if (!confirm) return;
+
     try {
       await axios.patch(
         `${API_URL}/products/${productId}`,
-         { stock: newStock },
-          {
-            headers: {
-               Authorization: `${token}`
-            }
-         }
+        { stock: newStock },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
       setEditingStock((prev) => {
         const updated = { ...prev };
@@ -156,30 +168,36 @@ const StockControlPage = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((prod) => (
-                <tr key={prod._id}>
-                  <td>{prod.name}</td>
-                  <td>
-                    <Form.Control
-                      type="number"
-                      min="0"
-                      value={editingStock[prod._id] ?? prod.stock}
-                      onChange={(e) => handleChangeStock(prod._id, e.target.value)}
-                      style={{ width: "80px" }}
-                    />
-                  </td>
-                  <td>{dayjs(prod.updatedAt).format("DD/MM/YYYY HH:mm")}</td>
-                  <td>
-                    <Button
-                      size="sm"
-                      variant="success"
-                      onClick={() => handleSaveStock(prod._id)}
-                    >
-                      Guardar
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+              {products.map((prod) => {
+                const editedValue = editingStock[prod._id];
+                const isModified = editedValue !== undefined && parseInt(editedValue) !== prod.stock;
+
+                return (
+                  <tr key={prod._id}>
+                    <td>{prod.name}</td>
+                    <td>
+                      <Form.Control
+                        type="number"
+                        min="0"
+                        value={editedValue ?? prod.stock}
+                        onChange={(e) => handleChangeStock(prod._id, e.target.value)}
+                        style={{ width: "80px" }}
+                      />
+                    </td>
+                    <td>{dayjs(prod.updatedAt).format("DD/MM/YYYY HH:mm")}</td>
+                    <td>
+                      <Button
+                        size="sm"
+                        variant="success"
+                        disabled={!isModified}
+                        onClick={() => handleSaveStock(prod._id, prod.stock)}
+                      >
+                        Guardar
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
 
@@ -212,4 +230,3 @@ const StockControlPage = () => {
 };
 
 export default StockControlPage;
-
