@@ -10,14 +10,11 @@ const StockControlPage = () => {
   const [products, setProducts] = useState([]);
   const [editingStock, setEditingStock] = useState({});
   const [loading, setLoading] = useState(true);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
   const limit = 5;
 
   const [toast, setToast] = useState({ show: false, message: "", bg: "success" });
@@ -68,16 +65,13 @@ const StockControlPage = () => {
   }, [page, searchTerm, selectedCategory]);
 
   const handleChangeStock = (productId, value) => {
-    const number = parseInt(value);
-    if (number < 0) return; // prevenir entrada negativa
-
     setEditingStock((prev) => ({
       ...prev,
       [productId]: value,
     }));
   };
 
-  const handleSaveStock = async (productId, currentStock) => {
+  const handleSaveStock = async (productId, originalStock) => {
     const rawValue = editingStock[productId];
     const newStock = parseInt(rawValue);
 
@@ -86,13 +80,18 @@ const StockControlPage = () => {
       return;
     }
 
-    if (newStock === currentStock) {
-      showToast("No hay cambios en el stock", "warning");
+    if (newStock === originalStock) return;
+
+    const confirm = window.confirm("¿Estás seguro de guardar el nuevo stock?");
+    if (!confirm) {
+      // Volver al valor original si se cancela
+      setEditingStock((prev) => {
+        const updated = { ...prev };
+        delete updated[productId];
+        return updated;
+      });
       return;
     }
-
-    const confirm = window.confirm("¿Estás seguro de actualizar el stock?");
-    if (!confirm) return;
 
     try {
       await axios.patch(
@@ -104,11 +103,13 @@ const StockControlPage = () => {
           },
         }
       );
+
       setEditingStock((prev) => {
         const updated = { ...prev };
         delete updated[productId];
         return updated;
       });
+
       fetchProducts();
       showToast("Stock actualizado correctamente", "success");
     } catch (error) {
@@ -170,7 +171,7 @@ const StockControlPage = () => {
             <tbody>
               {products.map((prod) => {
                 const editedValue = editingStock[prod._id];
-                const isModified = editedValue !== undefined && parseInt(editedValue) !== prod.stock;
+                const isChanged = editedValue !== undefined && parseInt(editedValue) !== prod.stock;
 
                 return (
                   <tr key={prod._id}>
@@ -189,7 +190,7 @@ const StockControlPage = () => {
                       <Button
                         size="sm"
                         variant="success"
-                        disabled={!isModified}
+                        disabled={!isChanged}
                         onClick={() => handleSaveStock(prod._id, prod.stock)}
                       >
                         Guardar
