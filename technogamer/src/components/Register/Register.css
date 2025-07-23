@@ -59,3 +59,10 @@
     font-size: 14px;
     color: #000;
 }
+
+.error-text {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
