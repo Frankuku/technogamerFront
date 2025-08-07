@@ -118,7 +118,7 @@ const AdminUsersPage = () => {
             onChange={(e) => setFilterRole(e.target.value)}
           >
             <option value="all">Todos</option>
-            <option value="user">Usuarios</option>
+            <option value="user">Clientes</option>
             <option value="admin">Administradores</option>
           </Form.Select>
         </Col>
@@ -158,7 +158,7 @@ const AdminUsersPage = () => {
                     <tr key={user._id}>
                       <td>{user.username}</td>
                       <td>{user.email}</td>
-                      <td>{user.role}</td>
+                      <td>{user.role === "admin" ? "Administrador" : "Cliente"}</td>
                       <td>
                         {!isAdmin ? (
                           <div className="d-flex gap-2">

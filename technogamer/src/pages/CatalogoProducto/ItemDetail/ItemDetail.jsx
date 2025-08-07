@@ -6,6 +6,7 @@ import Button from '../../../components/button/Button';
 import { useCart } from "../../../hook/useCart";
 import ToastMessage from "../../../components/ToastMessage";
 import API_URL from '../../../config/api';
+import API_URL_IMAGE from '../../../config/apiImage';
 
 function ItemDetail() {
   const { id } = useParams();
@@ -61,7 +62,7 @@ function ItemDetail() {
     <>
       <div className='item_producto'>
         <div>
-          <img src={`https://technogamer.onrender.com${item.image}`} alt="producto_img" />
+          <img src={`${API_URL_IMAGE}${item.image}`} alt="producto_img" />
         </div>
         <div className='informacion'>
           <h3>{item.name}</h3>

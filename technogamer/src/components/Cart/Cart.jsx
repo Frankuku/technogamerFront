@@ -5,11 +5,12 @@ import carrito from "../../assets/img/iconos/carrito.png";
 import Button from "../button/Button.jsx";
 import { Link } from "react-router-dom";
 import ToastMessage from "../ToastMessage.jsx";
+import API_URL_IMAGE from "../../config/apiImage.js";
 
 function CartItem({ product, decreaseQuantity, onAdd, onRemove }) {
     return (
         <li>
-            <img src={`https://technogamer.onrender.com${product.image}`} alt={product.name} />
+            <img src={`${API_URL_IMAGE}${product.image}`} alt={product.name} />
             <h3>{product.name}</h3>
             <div>${product.price * product.quantity}</div>
             <small>Cantidad: {product.quantity}</small>

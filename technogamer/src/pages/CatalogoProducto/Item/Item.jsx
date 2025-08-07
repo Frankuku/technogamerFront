@@ -5,6 +5,7 @@ import { useCart } from "../../../hook/useCart.js";
 import ToastMessage from "../../../components/ToastMessage.jsx";
 import './Item.css';
 import carrito from '../../../assets/img/iconos/carrito.png';
+import API_URL_IMAGE from "../../../config/apiImage.js";
 
 function Item({ producto }) {
   const { addToCart, isStockAvailable, cartCheckboxRef } = useCart();
@@ -37,7 +38,7 @@ function Item({ producto }) {
       <Link to={`/producto/${producto._id}`} className="col-sm-12 col-md-5 col-lg-3 p-2">
         <div className="card">
           <img
-            src={`https://technogamer.onrender.com${producto.image}`}
+            src={`${API_URL_IMAGE}${producto.image}`}
             className="card-img-top"
             alt={producto.name}
           />
