@@ -33,7 +33,7 @@ function ItemListContainer() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const params = { page: pageNumber, limit: 10 }; // 👈 limit: 10 por página
+      const params = { page: pageNumber, limit: 9 }; // 👈 limit: 10 por página
 
       if (search.trim()) params.search = search;
       if (categoryParam) params.category = categoryParam;
