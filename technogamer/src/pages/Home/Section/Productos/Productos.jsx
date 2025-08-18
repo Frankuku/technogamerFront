@@ -2,15 +2,15 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Producto from './Producto/Producto'; // Asumiendo que Producto.js está en el mismo nivel
-import Teclado from './../../../../assets/img/Teclado.jpg'
-import Sdd from './../../../../assets/img/Sdd.jpg'
-import Procesador from './../../../../assets/img/Procesador.jpg'
-import Auriculares from './../../../../assets/img/Auriculares.jpg'
-import Monitores from './../../../../assets/img/Monitores.jpg'
-import Mueble from './../../../../assets/img/Mueble.jpg'
-import Gabinete from './../../../../assets/img/Gabinete.jpg'
-import Grafica from './../../../../assets/img/Grafica.jpg'
-import Refrigadores from './../../../../assets/img/Refrigadores.jpg'
+import Teclado from './../../../../assets/img/Teclado.webp'
+import Sdd from './../../../../assets/img/Sdd.webp'
+import Procesador from './../../../../assets/img/Procesador.webp'
+import Auriculares from './../../../../assets/img/Auriculares.webp'
+import Monitores from './../../../../assets/img/Monitores.webp'
+import Mueble from './../../../../assets/img/Mueble.webp'
+import Gabinete from './../../../../assets/img/Gabinete.webp'
+import Grafica from './../../../../assets/img/Grafica.webp'
+import Refrigadores from './../../../../assets/img/Refrigadores.webp'
 import './Productos.css'
 // Y el resto de las importaciones...
 
@@ -18,7 +18,7 @@ function Productos() {
     return (
         <Row>
             <Col xs={12} lg={6}>
-                <Producto imagen={Teclado} altText="Teclado" title="Teclados" link="/productos/685f31e1e967a7821530a05a" />
+                <Producto imagen={Teclado} altText="Teclado" title="Teclados" link="/productos/68a29aa4d2867bad668a4807" />
                 <Row>
                     <Col xs={12} lg={6} className='ps-0'>
                         <Producto imagen={Auriculares} altText="Auriculares" title="Auriculares" link="/productos/68630b9c33269bded63d4139" />
@@ -44,7 +44,7 @@ function Productos() {
                         <Producto imagen={Grafica} altText="Grafica" title="Tarjeta Gráfica" link="/productos/68630ab233269bded63d4125" />
                     </Col>
                     <Col xs={12} lg={6} className='pe-0'>
-                        <Producto imagen={Refrigadores} altText="Refrigadores" title="Refrigeración" link="/productos/Refrigeración" />
+                        <Producto imagen={Refrigadores} altText="Refrigadores" title="Refrigeración" link="/productos/68a2a51785dcd3fdfb9ce0ee" />
                     </Col>
                 </Row>
             </Col>

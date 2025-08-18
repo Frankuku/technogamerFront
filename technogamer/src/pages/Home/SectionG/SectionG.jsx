@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Articulos from './Articulos/Articulos';
-import ArticuloImgUno from '../../../assets/img/Articulos/Articulo_1.png';
-import ArticuloImgDos from '../../../assets/img/Articulos/Articulo_2.png';
-import ArticuloImgTres from '../../../assets/img/Articulos/Articulo_3.png';
+import ArticuloImgUno from '../../../assets/img/Articulos/Articulo_1.webp';
+import ArticuloImgDos from '../../../assets/img/Articulos/Articulo_2.webp';
+import ArticuloImgTres from '../../../assets/img/Articulos/Articulo_3.webp';
 import './SectionG.css';
 
 function SectionG() {
